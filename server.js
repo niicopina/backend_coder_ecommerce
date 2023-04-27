@@ -43,3 +43,8 @@ let one_function = (req, res) => {
     
 }
 server.get(one_route, one_function)
+
+server.post(
+    '/products',
+    (req, res)
+)
