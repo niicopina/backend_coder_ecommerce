@@ -1,4 +1,5 @@
-const fs = require('fs')
+//const fs = require('fs')
+import fs from 'fs'
 
 class ProductManager {
     constructor(path){
@@ -66,7 +67,10 @@ class ProductManager {
         fs.writeFileSync(this.path, JSON.stringify(products))
     }
 }
+
+
 const pm = new ProductManager('./products.json')
+
 
 pm.addProduct({
     title: 'Cheesecake',
@@ -92,3 +96,5 @@ pm.addProduct({
     code: 'PROD3',
     stock: 5
 })
+
+export default pm
