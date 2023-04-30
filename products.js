@@ -68,7 +68,7 @@ class ProductManager {
 }
 const pm = new ProductManager('./products.json')
 
-pm.addProduct({
+/* pm.addProduct({
     title: 'Cheesecake',
     description: 'Torta de queso con frutos rojos',
     price: 4000,
@@ -91,6 +91,6 @@ pm.addProduct({
     thumbnail: 'https://img2.rtve.es/i/?w=1600&i=1635859279860.jpg',
     code: 'PROD3',
     stock: 5
-})
+}) */
 
 export default pm
