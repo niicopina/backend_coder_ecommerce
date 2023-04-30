@@ -1,4 +1,4 @@
-const fs = require('fs')
+import fs from 'fs'
 
 class ProductManager {
     constructor(path){
@@ -92,3 +92,5 @@ pm.addProduct({
     code: 'PROD3',
     stock: 5
 })
+
+export default pm
