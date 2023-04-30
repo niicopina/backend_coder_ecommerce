@@ -10,9 +10,9 @@ server.use(express.urlencoded({extended:true}))
 
 let index_route = '/'
 let index_function = (req, res) => {
-    let quantity = manager.read_users().length
+    let quantity = manager.getProducts().length
     console.log(quantity)
-    return res.send(`there are ${quantity} users`)
+    return res.send(`there are ${quantity} products`)
 }
 server.get(index_route, index_function)
 
