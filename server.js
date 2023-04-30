@@ -1,5 +1,5 @@
 import express from 'express'
-import pm from './products.js'
+import pm from './src/products.js'
 
 const server = express()
 
