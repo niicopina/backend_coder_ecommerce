@@ -1,0 +1,25 @@
+Se trata de un proyecto en el que se manejan cuatro archivos diferentes para implementar una API:
+
+1. server.js
+Este archivo es el archivo principal de la API. Aquí se importa Express y el archivo main.js. Luego se crea una instancia de Express y se configura para que escuche en el puerto 8000.
+Después se definen tres rutas diferentes:
+Ruta "/" que devuelve la cantidad de productos disponibles. Esta ruta llama al método getProducts() del archivo main.js para obtener la cantidad de productos y luego devuelve un mensaje con la cantidad.
+Ruta "/products/:id" que devuelve un producto específico. Esta ruta espera un parámetro de la URL que representa el ID del producto que se desea obtener. La ruta llama al método getProductsById() del archivo main.js para obtener el producto con el ID especificado y devuelve una respuesta con el producto si se encuentra o un mensaje de error si no se encuentra.
+Ruta "/products" que devuelve una lista de productos. Esta ruta tiene un parámetro de consulta llamado "quantity" que se usa para limitar la cantidad de productos que se devuelven. La ruta llama al método getProducts() del archivo main.js para obtener una lista de productos y luego limita la lista de productos según la cantidad especificada en el parámetro de consulta "quantity". La ruta devuelve una respuesta con la lista de productos si se encuentra o un mensaje de error si no se encuentra.
+
+2. app.js
+Este archivo define dos rutas diferentes para la API:
+Ruta "/api/products" que devuelve una lista de productos. Esta ruta espera un parámetro de consulta llamado "limit" que se usa para limitar la cantidad de productos que se devuelven. La ruta lee el archivo productos.txt y luego limita la lista de productos según la cantidad especificada en el parámetro de consulta "limit". La ruta devuelve una respuesta con la lista de productos si se encuentra o un mensaje de error si no se encuentra.
+Ruta "/api/products/:pid" que devuelve un producto específico. Esta ruta espera un parámetro de la URL que representa el ID del producto que se desea obtener. La ruta lee el archivo productos.txt y luego busca el producto con el ID especificado. La ruta devuelve una respuesta con el producto si se encuentra o un mensaje de error si no se encuentra.
+
+3. products.js
+Este archivo define una clase llamada ProductManager que se usa para crear y manejar los productos del json:
+se exporta un objeto con dos métodos: 'getAllProducts' y 'getProductById'.
+El método 'getAllProducts' simplemente devuelve la matriz de productos definida anteriormente.
+El método 'getProductById' acepta un ID de producto como parámetro y devuelve el objeto de producto correspondiente. Si no se encuentra ningún producto con el ID proporcionado, devuelve undefined.
+
+4. cart.js
+Este archivo define una clase llamada CartManager que se usa para manejar los carritos de la tienda. La clase tiene tres métodos diferentes:
+Método addCart() que agrega un nuevo carrito a la lista de carritos. Este método lee el archivo carritos.txt, agrega un nuevo carrito a la lista de carritos y luego guarda la lista de carritos en el archivo carritos.txt. El método devuelve el ID del nuevo carrito agregado.
+Método getCarts() que devuelve una lista de todos los carritos disponibles. Este método lee el archivo carritos.txt y devuelve una lista de todos los carritos disponibles o un mensaje de error si no se encuentran carritos.
+Método getCartById() que devuelve un carrito específico. Este método espera un parámetro que representa el ID del carrito que se desea obtener. El método lee el archivo carritos.txt, busca el carrito con el ID especificado y luego devuelve una respuesta con el carrito si se encuentra o un mensaje de error si no se encuentra

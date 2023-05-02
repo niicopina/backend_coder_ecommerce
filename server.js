@@ -1,5 +1,5 @@
 import express from 'express'
-import pm from './main.js'
+import pm from './src/products'
 
 let server = express()
 
@@ -57,3 +57,32 @@ let query_function = (req, res) => {
     }
 }
 server.get(query_route, query_function)
+
+import cartManager from './src/cart'
+
+app.get('/api/carts', async (req,res)=> {
+    const carts = await cartManager.getCarts()
+    if(carts === 'Not found'){
+        res.send({
+            success: true,
+            response: []
+        })
+    }else if(carts === 'getCarts: error'){
+        res.send({
+            success: false,
+            response: []
+        })
+    }else{
+        res.json(carts)
+    }
+})
+
+/* const cart = require('./src/cart.js')
+const cart = []
+
+function addItemToCart(item){
+    cart.push(item)
+}
+module.exports = {
+    cart, addItemToCart
+} */
