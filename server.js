@@ -76,12 +76,3 @@ app.get('/api/carts', async (req,res)=> {
         res.json(carts)
     }
 })
-
-/* const cart = require('./src/cart.js')
-const cart = []
-function addItemToCart(item){
-    cart.push(item)
-}
-module.exports = {
-    cart, addItemToCart
-} */

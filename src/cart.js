@@ -50,20 +50,3 @@ class CartManager {
 const cartManager = new CartManager('./carritos.txt')
 
 export default cartManager
-
-/* appendFile.get('/api/carts', async (req,res)=> {
-    const carts = await cartManager.getCarts()
-    if(carts === 'Not found'){
-        res.send({
-            success: true,
-            response: []
-        })
-    }else if(carts === 'getCarts: error'){
-        res.send({
-            success: false,
-            response: []
-        })
-    }else{
-        res.json
-    }
-}) */
