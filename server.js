@@ -1,5 +1,5 @@
 import express from 'express'
-import pm from './src/products'
+import productManager from './src/products'
 
 let server = express()
 
@@ -11,7 +11,7 @@ server.use(express.urlencoded({extended:true}))
 
 let index_route = '/'
 let index_function = (req, res) => {
-    let quantity = pm.getProducts().length
+    let quantity = productManager.getProducts().length
     console.log(quantity)
     return res.send(`there are ${quantity} products`)
 }
@@ -23,7 +23,7 @@ let one_function = (req, res) => {
     let id = Number(parametros.id)
     //console.log(id)
     //console.log(typeof id)
-    let one = pm.getProductsById(id)
+    let one = productManager.getProductsById(id)
     console.log(one)
     if(one){
         return res.send({
@@ -43,7 +43,7 @@ let query_route = '/products'
 let query_function = (req, res) => {
     console.log(req.query)
     let quantity = res.query.quantity ?? 3
-    let products = pm.getProducts().slice(0, quantity)
+    let products = productManager.getProducts().slice(0, quantity)
     if(products.length > 0){
         return res.send({
             success: true,

@@ -66,9 +66,9 @@ class ProductManager {
         fs.writeFileSync(this.path, JSON.stringify(products))
     }
 }
-const pm = new ProductManager('./products.json')
+const productManager = new ProductManager('./products.json')
 
-/* pm.addProduct({
+/* productManager.addProduct({
     title: 'Cheesecake',
     description: 'Torta de queso con frutos rojos',
     price: 4000,
@@ -76,7 +76,7 @@ const pm = new ProductManager('./products.json')
     code: 'PROD1',
     stock: 4
 })
-pm.addProduct({
+productManager.addProduct({
     title: 'Torta Oreo',
     description: 'Torta chocolate y mousse a base de galletas oreo',
     price: 5000,
@@ -84,7 +84,7 @@ pm.addProduct({
     code: 'PROD2',
     stock: 2
 });
-pm.addProduct({
+productManager.addProduct({
     title: 'Lemon Pie',
     description: 'Pastel de mousse de limon con merengue',
     price: 4500,
@@ -93,4 +93,4 @@ pm.addProduct({
     stock: 5
 }) */
 
-export default pm
+export default productManager
