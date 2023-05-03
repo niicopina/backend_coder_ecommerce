@@ -79,7 +79,6 @@ app.get('/api/carts', async (req,res)=> {
 
 /* const cart = require('./src/cart.js')
 const cart = []
-
 function addItemToCart(item){
     cart.push(item)
 }
