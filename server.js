@@ -107,8 +107,28 @@ server.put(
 )
 server.delete(
     '/products/:id',
-    (req,res)=>{
-        
+    async (req,res)=>{
+        try{
+            let id = req.body.id ?? null
+            if(id){
+                let deletedProduct = await productManager.deleteProduct({id})
+                return res.json({
+                    status: 200,
+                    deletedProduct,
+                    message: 'Product deleted success'
+                })
+            }else{
+                return res.json({
+                    status: 400,
+                    message: 'Seems to be a problem with the Id'
+                })
+            }
+        }catch(error){
+            return res.json({
+                status: 500,
+                message: 'ERROR'
+            })
+        }
     }
 )
 
