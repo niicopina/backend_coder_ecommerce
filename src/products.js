@@ -18,6 +18,10 @@ class ProductManager {
             console.error('A product with the same code already exist')
             return
         }
+        /* if(this.products.length > 0){
+            let nextId = this.products[this.products.length-1].id+1
+            product.id = nextId
+        } */
         product.id = this.nextId++
         products.push(product)
         this.saveProductsToFile(products)

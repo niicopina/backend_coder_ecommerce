@@ -8,6 +8,7 @@ let ready = () => console.log('server ready on port: '+PORT)
 
 server.listen(PORT, ready)
 server.use(express.urlencoded({extended:true}))
+server.use(express.json())
 
 let index_route = '/'
 let index_function = (req, res) => {
@@ -57,28 +58,59 @@ server.get(query_route, query_function)
 
 server.post(
     '/products',
-    (req, res) => {
-        let title = req.body.title ?? null
-        let description = req.body.description ?? null
-        let price = req.body.price ?? null
-        let thumbnail = req.body.thumbnail ?? null
-        let code = req.body.code ?? null
-        let stock = req.body.stock ?? null
-        if(title&&description&&price&&thumbnail&&code&&stock){
-            productManager.addProduct({title, description, price, thumbnail, code, stock})
+    async (req, res) => {
+        try{
+            let title = req.body.title ?? null
+            let description = req.body.description ?? null
+            let price = req.body.price ?? null
+            let thumbnail = req.body.thumbnail ?? null
+            let code = req.body.code ?? null
+            let stock = req.body.stock ?? null
+            if(title&&description&&price&&thumbnail&&code&&stock){
+            let product = await productManager.addProduct({title, description, price, thumbnail, code, stock})
+                return res.json({
+                    status: 201,
+                    message: 'Created'
+                })
+            } else {
+                res.json({
+                    status: 400,
+                    message: 'Check data!'
+                    })
+                }
+            }catch(error){
+                return res.json({
+                    status: 500,
+                    message: 'ERROR'
+                })
+            }
+        
+    }
+)
+server.put(
+    '/products/:pid',
+    (req, res)=>{
+        if(req.params.pid){
+            let id = Number(req.params.pid)
+            productManager.updateProduct(id)
             return res.json({
-                status: 201,
-                message: 'Created'
+                status: 200,
+                message: 'Product updated'
             })
-        } else {
-            res.json({
+        }else{
+            return res.json({
                 status: 400,
                 message: 'Check data!'
             })
         }
     }
 )
-
+server.delete(
+    '/products/:id',
+    (req,res)=>{
+        
+    }
+)
 
 import cartManager from './src/cart.js'
 import app from './src/app.js'
