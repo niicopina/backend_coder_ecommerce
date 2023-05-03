@@ -1,5 +1,5 @@
 import express from 'express'
-import productManager from './src/products'
+import productManager from './src/products.js'
 
 let server = express()
 
@@ -58,7 +58,8 @@ let query_function = (req, res) => {
 }
 server.get(query_route, query_function)
 
-import cartManager from './src/cart'
+import cartManager from './src/cart.js'
+import app from './src/app.js'
 
 app.get('/api/carts', async (req,res)=> {
     const carts = await cartManager.getCarts()

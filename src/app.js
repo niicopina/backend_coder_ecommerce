@@ -49,3 +49,4 @@ app.get('/api/products/:pid', async (req, res)=> {
         })
     }
 })
+export default app
