@@ -2,11 +2,12 @@ import express from 'express'
 import router from './src/routes/index_router.js'
 import errorHandler from './src/middlewares/errorHandler.js'
 import not_found_handler from './src/middlewares/notFoundHandler.js'
+import { engine } from 'express-handlebars'
+
 //import productManager from './src/products.js'
 //import productRouter from './src/routes/api/products.router.js'
 
 let server = express()
-
 let PORT = 8000
 let ready = () => console.log('server ready on port: '+PORT)
 
@@ -17,7 +18,9 @@ server.use('/', router)
 server.use(errorHandler)
 server.use(not_found_handler)
 server.use(express.static('public'))
-//server.use('/api/products', productRouter)
+server.engine('handlebars', engine())
+server.set('view engine', 'handlebars')
+
 
 let index_route = '/'
 let index_function = (req, res) => {
