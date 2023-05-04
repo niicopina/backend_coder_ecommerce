@@ -1,7 +1,9 @@
 import express from 'express'
-import productManager from './src/products.js'
-import productRouter from './src/routes/products.router.js'
-import petsRouter from './src/routes/pets.router.js'
+import router from './src/routes/index_router.js'
+import errorHandler from './src/middlewares/errorHandler.js'
+import not_found_handler from './src/middlewares/notFoundHandler.js'
+//import productManager from './src/products.js'
+//import productRouter from './src/routes/api/products.router.js'
 
 let server = express()
 
@@ -9,11 +11,13 @@ let PORT = 8000
 let ready = () => console.log('server ready on port: '+PORT)
 
 server.listen(PORT, ready)
-server.use(express.urlencoded({extended:true}))
+server.use('/public',express.urlencoded({extended:true}))
 server.use(express.json())
-
-server.use('/api/products', productRouter)
-server.use('/api/pets', petsRouter)
+server.use('/', router)
+server.use(errorHandler)
+server.use(not_found_handler)
+server.use(express.static('public'))
+//server.use('/api/products', productRouter)
 
 let index_route = '/'
 let index_function = (req, res) => {
@@ -137,7 +141,7 @@ server.delete(
     }
 )
 
-import cartManager from './src/cart.js'
+import cartManager from './src/managers/cart.js'
 import app from './src/app.js'
 
 app.get('/api/carts', async (req,res)=> {

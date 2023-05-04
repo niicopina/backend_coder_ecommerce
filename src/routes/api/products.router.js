@@ -1,14 +1,18 @@
 import {Router} from 'express'
 
 const router = Router()
-const products = []
+const products_router = []
 
-router.get(
-    '/',
-    (req,res) => {
-        res.json({products})
-    })
-router.post(
+product_router.get('/', (req, res, next)=> {
+    try{
+        return res.json({status: ok})
+    }catch(error){
+        next(error)
+    }
+})
+
+
+product_router.post(
     '/',
     (req,res) => {
         const product = req.body
@@ -19,4 +23,4 @@ router.post(
         })
     }
 )
-export default router
+export default products_router
