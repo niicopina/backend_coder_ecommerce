@@ -1,5 +1,7 @@
 import express from 'express'
 import productManager from './src/products.js'
+import productRouter from './src/routes/products.router.js'
+import petsRouter from './src/routes/pets.router.js'
 
 let server = express()
 
@@ -9,6 +11,9 @@ let ready = () => console.log('server ready on port: '+PORT)
 server.listen(PORT, ready)
 server.use(express.urlencoded({extended:true}))
 server.use(express.json())
+
+server.use('/api/products', productRouter)
+server.use('/api/pets', petsRouter)
 
 let index_route = '/'
 let index_function = (req, res) => {
