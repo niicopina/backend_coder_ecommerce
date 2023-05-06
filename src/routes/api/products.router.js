@@ -1,6 +1,6 @@
 import {Router} from 'express'
 
-const router = Router()
+const product_router = Router()
 const products_router = []
 
 product_router.get('/', (req, res, next)=> {

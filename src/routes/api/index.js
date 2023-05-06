@@ -5,8 +5,8 @@ import cart_router from './cart.router.js'
 
 const api_router = Router()
 
-router.get('/products', products_router)
-router.get('/cart', cart_router)
+api_router.get('/products', products_router)
+api_router.get('/cart', cart_router)
 
 
 export default api_router
