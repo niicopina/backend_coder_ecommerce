@@ -90,7 +90,36 @@ class CartManager {
             return 'Error updating cart'
         }
     }
-    
+    async deleteCartProduct(id, productId, units){
+        try{
+            const carts = await this.getCartsFromFile()
+            const cart = carts.find( c => c.id === id)
+            if(!cart){
+                return 'Cart not found'
+            }
+            const existingProduct = cart.products.find(p => p.id === productId)
+            if(!existingProduct){
+                return 'Product not found in cart'
+            }
+            const product = await productManager.getProductsById(productId)
+            if(!product){
+                return 'Product not found'
+            }
+            if(units > existingProduct.units){
+                return 'Not enough units in the cart'
+            }
+            existingProduct.units -= units
+            product.stock += units
+            if(existingProduct.units === 0){
+                cart.products = cart.products.filter(p => p.id !== productId)
+            }
+            await this.saveCartsToFile(carts)
+            return 'Cart product deleted successfully'
+        }catch(error){
+            console.log(error)
+            return 'Error deleting cart product'
+        }
+    }
 }
 const cartManager = new CartManager('./carritos.txt')
 
