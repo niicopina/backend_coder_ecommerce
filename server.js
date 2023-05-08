@@ -1,5 +1,5 @@
 import express from 'express'
-import router from './src/routes/api/index.js'
+import api_router from './src/routes/api/index.js'
 import errorHandler from './src/middlewares/errorHandler.js'
 import not_found_handler from './src/middlewares/notFoundHandler.js'
 import { engine } from 'express-handlebars'
@@ -13,7 +13,7 @@ let ready = () => console.log('server ready on port: '+PORT)
 server.listen(PORT, ready)
 server.use('/public',express.urlencoded({extended:true}))
 server.use(express.json())
-server.use('/', router)
+server.use('/', api_router)
 server.use(errorHandler)
 server.use(not_found_handler)
 server.use(express.static('public'))
@@ -23,7 +23,7 @@ server.set('view engine', 'handlebars')
 server.set('views', __dirname + '/views')
 
 
-import cartManager from './src/managers/cart.js'
+/* import cartManager from './src/managers/cart.js'
 import app from './src/app.js'
 
 app.get('/api/carts', async (req,res)=> {
@@ -41,4 +41,4 @@ app.get('/api/carts', async (req,res)=> {
     }else{
         res.json(carts)
     }
-})
+}) */

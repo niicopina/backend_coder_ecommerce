@@ -2,7 +2,6 @@ import {Router} from 'express'
 import productManager from 'file:///C:/Users/usuario/Desktop/Desarrollo/BACKEND/proyecto/src/managers/products.js'
 
 const product_router = Router()
-const products_router = []
 
 let index_route = '/'
 let index_function = (req, res) => {
@@ -126,4 +125,4 @@ product_router.delete(
     }
 )
 
-export default products_router
+export default product_router

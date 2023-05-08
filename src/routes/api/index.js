@@ -1,12 +1,12 @@
 import { Router } from "express";
-import products_router from './products.router.js'
+import product_router from './products.router.js'
 import cart_router from './cart.router.js'
 
 
 const api_router = Router()
 
-api_router.get('/products', products_router)
-api_router.get('/cart', cart_router)
+api_router.get('/api/products', product_router)
+api_router.get('/api/cart', cart_router)
 
 
 export default api_router

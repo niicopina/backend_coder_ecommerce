@@ -12,14 +12,14 @@ cart_router.post(
             const cartId = await cartManager.addCart()
             return res.json({
                 status: 200,
-                message: 'Cart Created',
+                message: 'Cart created',
                 cartId
             })
         }catch(error){
             console.log(error)
             return res.json({
                 status: 500,
-                message: 'ERror creatiung cart'
+                message: 'Error creating cart'
             })
         }
     }
