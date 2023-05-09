@@ -50,7 +50,7 @@ let query_function = (req, res) => {
 product_router.get(query_route, query_function)
 
 product_router.post(
-    '/api/products',
+    '/',
     async (req, res) => {
         try{
             let title = req.body.title ?? null
@@ -81,7 +81,7 @@ product_router.post(
     }
 )
 product_router.put(
-    '/api/products/:pid',
+    '/:pid',
     (req, res)=>{
         if(req.params.pid){
             let id = Number(req.params.pid)
@@ -99,10 +99,10 @@ product_router.put(
     }
 )
 product_router.delete(
-    '/api/products/:id',
+    '/:pid',
     async (req,res)=>{
         try{
-            let id = req.body.id ?? null
+            let id = req.body.pid ?? null
             if(id){
                 let deletedProduct = await productManager.deleteProduct({id})
                 return res.json({

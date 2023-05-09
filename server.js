@@ -1,5 +1,5 @@
 import express from 'express'
-import api_router from './src/routes/api/index.js'
+import router from './src/routes/index_router.js'
 import errorHandler from './src/middlewares/errorHandler.js'
 import not_found_handler from './src/middlewares/notFoundHandler.js'
 import { engine } from 'express-handlebars'
@@ -13,7 +13,7 @@ let ready = () => console.log('server ready on port: '+PORT)
 server.listen(PORT, ready)
 server.use('/public',express.urlencoded({extended:true}))
 server.use(express.json())
-server.use('/', api_router)
+server.use('/', router)
 server.use(errorHandler)
 server.use(not_found_handler)
 server.use(express.static('public'))

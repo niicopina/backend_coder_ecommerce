@@ -121,6 +121,6 @@ class CartManager {
         }
     }
 }
-const cartManager = new CartManager('./carritos.json')
+const cartManager = new CartManager('./carts.json')
 
 export default cartManager
