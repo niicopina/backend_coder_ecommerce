@@ -109,7 +109,7 @@ product_router.delete(
     '/:pid',
     async (req,res)=>{
         try{
-            let id = req.body.pid ?? null
+            let id = Number(req.params.pid)
             if(id){
                 let deletedProduct = await productManager.deleteProduct({id})
                 return res.json({
