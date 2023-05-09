@@ -6,7 +6,7 @@ const cart_router = Router()
 //aqui van los put post delete de carrito
 
 cart_router.post(
-    '/api/carts',
+    '/',
     async (req, res) => {
         try{
             const cartId = await cartManager.addCart()

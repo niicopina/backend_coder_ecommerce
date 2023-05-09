@@ -11,27 +11,34 @@ let index_function = (req, res) => {
 }
 product_router.get(index_route, index_function)
 
-let one_route = '/api/products/:id'
-let one_function = (req, res) => {
-    let parametros = req.params
-    let id = Number(parametros.id)
-    let one = productManager.getProductsById(id)
-    console.log(one)
-    if(one){
-        return res.send({
-            success: true,
-            product: one
-        })
-    } else {
-        return res.send({
-            success: false,
-            product: 'No product found with this ID'
-        })
-    }
-}
+let one_route = '/products/:id'
+let one_function = async (req, res) => {
+    try{
+        //let parametros = req.params
+        let id = Number(req.params.id)
+        let one = await productManager.getProductsById(id)
+        console.log(one)
+        if(one){
+            return res.send({
+                success: true,
+                product: one
+            })
+        } else {
+            return res.send({
+                success: false,
+                product: 'No product found with this ID'
+            })
+        }
+            }catch(error){
+                console.log(error);
+                return res.send({
+                success: false,
+                product: 'Error retrieving product'
+            })
+        }}
 product_router.get(one_route, one_function)
 
-let query_route = '/api/products'
+let query_route = '/products'
 let query_function = (req, res) => {
     let quantity = req.query.quantity ?? 3
     let products = productManager.getProducts().slice(0, quantity)
