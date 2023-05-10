@@ -1,1 +1,19 @@
-<div>Esta es mi pagina de inicio</div>
+<h1>Esta es mi pagina de inicio</h1>
+<h2>Hola {{name}}</h2>
+{{#if last_name}}
+<h3>{{last_name}}</h3>
+{{else}}
+<h2>deberia haber un apellido si existe</h2>
+{{/if}}
+<div class="d-flex justify-content-evenly">
+{{#each alumnos}}
+    <div class="card" style="width: 15rem">
+        <img src={{this.photo}} class="card-img-top" style="width: 15rem; height: 10rem">
+        <div class="card-body">
+            <h5 class="card-title">{{this.name}}</h5>
+            <p class="card-text">Alumno de backend</p>
+            <a href="#" class="btn btn-primary">+ info</a>
+        </div>
+    </div>
+{{/each}}
+</div>
