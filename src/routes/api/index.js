@@ -6,7 +6,7 @@ import cart_router from './cart.router.js'
 const router = Router()
 
 router.use('/products', product_router)
-router.use('/cart', cart_router)
+router.use('/carts', cart_router)
 
 
 export default router
