@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Products</title>
+</head>
+<body>
+  <h1>Crear nuevo producto</h1>
+  <!-- Formulario para crear un nuevo producto -->
+  <form action="/api/products" method="POST">
+    <label for="name">{{title}}</label>
+    <input type="text" id="name" name="name">
+    <label for="price">{{price}}</label>
+    <input type="number" id="price" >
+    <label for="description">{{description}}</label>
+    <input type="text" id="description" name="description">
+    <button type="submit">Crear</button>
+  </form>
+</body>
+</html>
