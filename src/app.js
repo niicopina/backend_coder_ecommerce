@@ -1,52 +1,22 @@
 import express from 'express'
-import fs from 'fs'
+import router from './routes/index_router.js'
+import errorHandler from './middlewares/errorHandler.js'
+import not_found_handler from './middlewares/notFoundHandler.js'
+import { engine } from 'express-handlebars'
+import { __dirname } from './utils.js'
 
-const app = express()
+const server = express()
 
-app.get('/api/products', async (req, res)=> {
-    try{
-        const limit = req.query.limit ? parseInt(req.query.limit) : null
-        const products = JSON.parse(await fs.promises.readFile('./productos.txt', 'utf-8'))
-        if(limit){
-            res.send({
-                success: true,
-                response: products.slice(0, limit)
-            })
-        }else{
-            res.send({
-                success: true,
-                response: []
-            })
-        }
-    }catch(error) {
-        console.log(error)
-        res.send({
-            success: false,
-            response: []
-        })
-    }
-})
-app.get('/api/products/:pid', async (req, res)=> {
-    try{
-        const products = JSON.parse(await fs.promises.readFile('./productos.txt', 'utf-8'))
-        const product = products.find(p => p.id === req.params.pid)
-        if(!product) {
-            res.send({
-                success: false,
-                response: {}
-            })
-        }else{
-            res.send({
-                success: true,
-                response: product
-            })
-        }
-    }catch(error){
-        console.log(error)
-        res.send({
-            success: false,
-            response: {}
-        })
-    }
-})
-export default app
+//template engine
+server.engine('handlebars', engine())
+server.set('view engine', 'handlebars')
+server.set('views', __dirname + '/views')
+//middlewares
+server.use(express.static('public'))
+server.use('/public',express.urlencoded({extended:true}))
+server.use(express.json())
+server.use('/', router)
+server.use(errorHandler)
+server.use(not_found_handler)
+
+export default server
