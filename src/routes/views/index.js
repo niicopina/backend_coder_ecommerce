@@ -1,11 +1,12 @@
 import { Router } from "express";
-import express from 'express'
-import productsViews_router from "./products.js";
+import productsViews_router from "./newProducts.js";
+import home_router from './home.js'
 
 const router = Router()
 
 router.use('/products', productsViews_router)
 //router.use('/carts', cartsView_router)
+router.use('/', home_router)
 
 export default router
 

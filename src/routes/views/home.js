@@ -1,8 +1,29 @@
 import { Router } from "express";
+import fs from 'fs/promises'
 
-const router = Router()
+const home_router = Router()
 
-router.get(
+home_router.get(
+    '/', 
+    async (req,res,next)=> {
+    try {
+        const productsData = await fs.readFile('products.json', 'utf-8')
+        const products = JSON.parse(productsData)
+
+        return res.render(
+            'home',
+            {
+            products: products,
+            title: 'home',
+            script: '/connection.js'
+            })
+    } catch (error) {
+        next(error)
+    }
+})
+
+export default home_router
+/* router.get(
     '/',
     async (req, res, next) => {
         try{
@@ -32,6 +53,4 @@ router.get(
             next(error)
         }
     } 
-)
-export default router
-//aqui no se definen endpoints, se definen todas las rutas de vistas como por ej de users
+) */

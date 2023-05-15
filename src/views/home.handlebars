@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>E-commerce</title>
+</head>
+<body>
+    <button class="cart-button">{{ cartItemCount }}</button>
+
+  <h1>Bienvenido a nuestro e-commerce</h1>
+  <!-- Aquí va el contenido de la página -->
+  <div>
+    {{#each products}}
+      <div>
+        <h2>{{name}}</h2>
+        <p>{{description}}</p>
+        <img src={{photo}} alt={{name}}>
+      </div>
+    {{/each}}
+  </div>
+</body>
+</html>

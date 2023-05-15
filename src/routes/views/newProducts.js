@@ -7,7 +7,7 @@ productsViews_router.get(
     async (req, res, next) => {
         try {
             return res.render(
-                'products',
+                'newproducts',
                 {
                     title: 'Create new product',
                     price: 'Price',
