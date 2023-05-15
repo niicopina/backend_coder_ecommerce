@@ -9,7 +9,7 @@ productsViews_router.get(
             return res.render(
                 'newproducts',
                 {
-                    title: 'Create new product',
+                    title: 'Title',
                     price: 'Price',
                     description: 'Description'   
                 }
