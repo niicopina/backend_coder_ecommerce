@@ -24,7 +24,8 @@ router.get(
                         photo: 'https://www.shutterstock.com/image-photo/image-happy-beautiful-student-girl-260nw-1824708863.jpg'
                         }
                         ],
-                title: 'index'
+                title: 'index',
+                script: '/connection.js'
                }      
             )
         }catch(error){
