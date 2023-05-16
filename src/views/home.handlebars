@@ -6,14 +6,17 @@
 <body>
     <button class="cart-button">{{ cartItemCount }}</button>
 
-  <h1>Bienvenido a nuestro e-commerce</h1>
-  <!-- Aquí va el contenido de la página -->
-  <div>
+  <h1>Welcome to our artisan bakery</h1>
+
+  <div class="d-flex justify-content">
     {{#each products}}
-      <div>
-        <h2>{{name}}</h2>
-        <p>{{description}}</p>
-        <img src={{photo}} alt={{name}}>
+      <div class="card" style="width: 18rem">
+        <img src={{thumbnail}} class="card-img-top" style="width: 10rem; height: 8rem">
+        <div class="card-body">
+            <h5 class="card-title">{{name}}</h5>
+            <p class="card-text">{{description}}</p>
+            <a href="#" class="btn btn-primary">+ info</a>
+        </div>
       </div>
     {{/each}}
   </div>

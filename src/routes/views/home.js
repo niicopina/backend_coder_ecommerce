@@ -15,7 +15,7 @@ home_router.get(
             {
             products: products,
             title: 'home',
-            script: '/connection.js'
+            //script: '/connection.js'
             })
     } catch (error) {
         next(error)

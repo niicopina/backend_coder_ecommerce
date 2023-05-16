@@ -6,14 +6,59 @@
 <body>
   <h1>Create new product</h1>
   <!-- Formulario para crear un nuevo producto -->
-  <form action="/api/products" method="POST">
-    <label for="name">{{title}}</label>
-    <input type="text" id="name" name="name">
-    <label for="price">{{price}}</label>
-    <input type="number" id="price" >
-    <label for="description">{{description}}</label>
-    <input type="text" id="description" name="description">
-    <button type="submit">Create</button>
-  </form>
+
+      <form class="row g-3" id="newProductForm" action="/api/products" method="POST">
+        <div class="col-md-3">
+          <label for="name" class="form-label">{{title}}</label>
+          <input type="text" class="form-control" id="name" value="" required>
+        </div>
+        <div class="col-md-4">
+          <label for="description" class="form-label">{{description}}</label>
+          <input type="text" class="form-control" id="description" value="" required>
+        </div>
+        <div class="col-md-3">
+          <label for="stock" class="form-label">{{stock}}</label>
+          <input type="number" class="form-control" id="stock" value="" required>
+        </div>
+        <div class="col-md-3">
+          <label for="code" class="form-label">{{code}}</label>
+          <input type="text" class="form-control" id="code" required>
+        </div>
+         <div class="col-md-3">
+          <label for="price" class="form-label">{{price}}</label>
+          <input type="number" class="form-control" id="price" required>
+        </div>
+        <div class="col-md-4">
+          <label for="thumbnail" class="form-label">{{thumbnail}}</label>
+          <input type="text" class="form-control" id="thumbnail" value="https://somephoto.jpg" required>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+            <label class="form-check-label" for="invalidCheck2">
+              Agree to terms and conditions
+            </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" type="submit">Create Product</button>
+        </div>
+      </form>
+    
+   <!-- <form action="/newproducts" method="POST">
+      <label for="name">{{title}}</label>
+      <input type="text" id="name" name="title">
+      <label for="price">{{price}}</label>
+      <input type="number" id="price" name="price">
+      <label for="description">{{description}}</label>
+      <input type="text" id="description" name="description">
+      <label for="thumbnail">{{thumbnail}}</label>
+      <input type="text" id="thumbnail" name="thumbnail" placeholder="photo link">
+      <label for="code">{{code}}</label>
+      <input type="text" id="code" name="code">
+      <label for="stock">{{stock}}</label>
+      <input type="text" id="stock" name="stock">
+      <button type="submit">Create</button>
+    </form> -->
 </body>
 </html>
