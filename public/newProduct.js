@@ -12,7 +12,7 @@ form.addEventListener('submit', async (e) => {
         const response = await fetch('/api/products', {
             method: 'POST',
             headers: {
-                'Content-Type': 'applications/json'
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
             title, description, price, thumbnail, code, stock
