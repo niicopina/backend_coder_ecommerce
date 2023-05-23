@@ -25,12 +25,12 @@ server.use(not_found_handler)
 server.use(logger('dev'))
 
 //database
-/* connect('mongodb+srv://pinanicolasagustinellipsis@dbnicopina.wuf76cz.mongodb.net/commerce') //requiere min un parametro: link (URI) conexion
-    .then(()=>console.log('database connected'))
-    .catch(err=>console.log(err)) */
-
-connect('mongodb+srv://igna:hola1234@cluster0.dbl4oxi.mongodb.net/comercio')
+connect('mongodb+srv://pinanicolasagustin:ellipsis@dbnicopina.wuf76cz.mongodb.net/commerce') //requiere min un parametro: link (URI) conexion
     .then(()=>console.log('database connected'))
     .catch(err=>console.log(err))
+
+/* connect('mongodb+srv://igna:hola1234@cluster0.dbl4oxi.mongodb.net/comercio')
+    .then(()=>console.log('database connected'))
+    .catch(err=>console.log(err)) */
 
 export default server
