@@ -1,6 +1,6 @@
 import {Router} from 'express'
 import productManager from 'file:///C:/Users/usuario/Desktop/Desarrollo/BACKEND/proyecto/src/managers/products.js'
-import Product from '../../model/product.model.js'
+import Product from '../../models/product.model.js'
 
 const product_router = Router()
 
@@ -62,20 +62,21 @@ product_router.post(
     '/',
     async (req, res) => {
         try{
-            let response = await Product.create(req.body) // usando mongo
-
-            let title = req.body.title ?? null
+            /* let title = req.body.title ?? null
             let description = req.body.description ?? null
             let price = req.body.price ?? null
             let thumbnail = req.body.thumbnail ?? null
             let code = req.body.code ?? null
-            let stock = req.body.stock ?? null
-            if(title&&description&&price&&thumbnail&&code&&stock){
-            let product = await productManager.addProduct({title, description, price, thumbnail, code, stock})
-                return res.json({
-                    status: 201,
-                    message: 'Created'
-                })
+            let stock = req.body.stock ?? null */
+            
+            let response = await Product.create(req.body) // usando mongo
+
+            if(response){
+            return res.json({
+                status: 200,
+                message: 'created!',
+                response
+            })
             } else {
                 res.json({
                     status: 400,
