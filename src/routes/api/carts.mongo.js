@@ -53,3 +53,71 @@ carts_mongo.post(
     }
 
 )
+carts_mongo.get(
+    '/:id',
+    async(req,res,next) => {
+        try {
+            const cartId = req.params.id
+            const cart = await Cart.findById(cartId)
+            if(cart){
+                return res.status(200).json({
+                    success: true,
+                    data: cart
+                })
+            }else{
+                return res.status(404).json({
+                    success: false,
+                    message: 'cart not found'
+                })
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+carts_mongo.put(
+    '/:id',
+    async(req,res,next)=>{
+        try {
+            const cartId = req.params.id
+            const newProductId = req.body.id
+            const cart = await Cart.findByIdAndUpdate(cartId)
+            if(!cart){
+                return res.status(404).json({
+                    success: false,
+                    message: 'not found'
+                })
+            }
+            cart.product_id = newProductId
+            await cart.save()
+            return res.status(200).json({
+                success: true,
+                data: cart
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+carts_mongo.delete(
+    '/:id',
+    async(req,res,next)=> {
+        try {
+            const cart = await Cart.findByIdAndDelete(req.params.id)
+            if(cart){
+                return res.status(200).json({
+                    succes: true,
+                    message: 'cart deleted'
+                })
+            }else{
+                return res.status(404).json({
+                    success: false,
+                    message: 'cart not found'
+                })
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+export default carts_mongo
