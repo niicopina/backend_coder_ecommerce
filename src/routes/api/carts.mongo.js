@@ -27,3 +27,29 @@ carts_mongo.post(
         }
     }
 )
+carts_mongo.post(
+    '/:cartId/addProduct/:productId',
+    async(req,res,next)=>{
+        try {
+            const {cartId, productId} = req.params
+            const cart = await Cart.findById(cartId)
+            const product = await Product.findById(productId)
+            if(!cart || !product){
+                return res.status(404).json({
+                    success: false,
+                    message: 'cart or product not found'
+                })
+            }
+            cart.product_id = productId
+            await cart.save()
+            return res.status(200).json({
+                success: true,
+                message: 'product added to cart',
+                data: cart
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+)
