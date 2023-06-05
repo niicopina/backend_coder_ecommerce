@@ -51,7 +51,7 @@ product_mongo.post(
         try{            
             let product = await Product.create(req.body) // usando mongo
 
-            if(response){
+            if(product){
             return res.status(201).json({
                 success: true,
                 message: 'created!',
@@ -64,9 +64,8 @@ product_mongo.post(
                     })
                 }
             }catch(error){
-                next(error)
-            }
-        
+                console.error(error)
+            }   
     }
 )
 product_mongo.put(

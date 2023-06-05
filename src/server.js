@@ -9,9 +9,9 @@ const ready = () => {
         .then(()=> console.log('connected to database'))
         .catch(err=>console.log(err))
 }
-server.listen(port, ready)
+//server.listen(port, ready)
 
-/* let http_server = server.listen(PORT, ready)
+let http_server = server.listen(port, ready)
 
 let socket_server = new Server(http_server)
 const chats = []
@@ -26,4 +26,4 @@ socket_server.on('connection',
             console.log(chats)
             socket_server.emit('all_messages', chats)
         })
-    }) */
+    })
