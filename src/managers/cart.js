@@ -50,7 +50,7 @@ class CartManager {
     async updateCart(id, productId, units) {
         try{
             const carts = await this.getCartsFromFile()
-            const cart = carts.find(C => C.id ===id)
+            const cart = carts.find(c => c.id ===id)
             if(!carts){
                 return 'Cart not found!'
             }
