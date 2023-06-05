@@ -1,10 +1,9 @@
 import {Router} from 'express'
-import productManager from 'file:///C:/Users/usuario/Desktop/Desarrollo/BACKEND/proyecto/src/managers/products.js'
 import Product from '../../models/product.model.js'
 
-const product_router = Router()
+const product_mongo = Router()
 
-product_router.get(
+product_mongo.get(
     '/',
     async(req,res,next)=> {
         try {
@@ -25,7 +24,7 @@ product_router.get(
         }
     }
 )
-product_router.get(
+product_mongo.get(
     '/:id',
     async(req,res,next)=>{
         try {
@@ -46,34 +45,31 @@ product_router.get(
         }
     }
 )
-product_router.post(
+product_mongo.post(
     '/',
     async (req, res) => {
         try{            
-            let response = await Product.create(req.body) // usando mongo
+            let product = await Product.create(req.body) // usando mongo
 
             if(response){
-            return res.json({
-                status: 200,
+            return res.status(201).json({
+                success: true,
                 message: 'created!',
-                response
+                product
             })
             } else {
-                res.json({
-                    status: 400,
+                res.status(404).json({
+                    success: false,
                     message: 'Check data!'
                     })
                 }
             }catch(error){
-                return res.json({
-                    status: 500,
-                    message: 'ERROR'
-                })
+                next(error)
             }
         
     }
 )
-product_router.put(
+product_mongo.put(
     '/:pid',
     async (req, res)=>{
         try {
@@ -101,7 +97,7 @@ product_router.put(
         }
     }
 )
-product_router.delete(
+product_mongo.delete(
     '/:pid',
     async (req,res)=>{
         try{
@@ -128,4 +124,4 @@ product_router.delete(
     }
 )
 
-export default product_router
+export default product_mongo
