@@ -23,34 +23,3 @@ home_router.get(
 })
 
 export default home_router
-/* router.get(
-    '/',
-    async (req, res, next) => {
-        try{
-            return res.render(
-                'index',    //nombre de la vista
-               {
-                name: 'Nico',
-                last_name: 'Piña',
-                alumnos: [{
-                        name: 'Nicolas',
-                        photo: 'https://www.shutterstock.com/image-photo/image-happy-beautiful-student-girl-260nw-1824708863.jpg'
-                        },
-                        {
-                        name: 'Alejandro',
-                        photo: 'https://www.shutterstock.com/image-photo/image-happy-beautiful-student-girl-260nw-1824708863.jpg'
-                        },
-                        {
-                        name: 'Florencia',
-                        photo: 'https://www.shutterstock.com/image-photo/image-happy-beautiful-student-girl-260nw-1824708863.jpg'
-                        }
-                        ],
-                title: 'index',
-                script: '/connection.js'
-               }      
-            )
-        }catch(error){
-            next(error)
-        }
-    } 
-) */
