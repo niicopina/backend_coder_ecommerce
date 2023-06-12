@@ -24,6 +24,9 @@ server.use(not_found_handler)
 
 server.use(logger('dev'))
 
+server.get('/products', (req,res)=>{
+    res.sendFile(path.join(__dirname, 'public','html', 'pages', 'products.html'))
+})
 //database
 /* connect('mongodb+srv://pinanicolasagustin:ellipsis@dbnicopina.wuf76cz.mongodb.net/commerce') //requiere min un parametro: link (URI) conexion
     .then(()=>console.log('database connected'))

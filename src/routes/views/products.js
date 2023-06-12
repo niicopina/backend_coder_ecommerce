@@ -3,7 +3,17 @@ import Product from "../../models/product.model.js";
 
 const products_router = Router()
 
-products_router.get(
+products_router.get('/products', async (req, res, next) => {
+    try {
+        const products = await Product.find();
+        res.locals.products = products; // Almacena los productos en la variable local "products"
+        next();
+    } catch (error) {
+        next(error);
+    }
+});
+
+/* products_router.get(
     '/products',
     async(req,res,next)=> {
         try {
@@ -23,5 +33,5 @@ products_router.get(
             next(error)
         }
     }
-)
+) */
 export default products_router

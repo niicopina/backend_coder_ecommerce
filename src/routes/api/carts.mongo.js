@@ -75,6 +75,69 @@ carts_mongo.get(
         }
     }
 )
+carts_mongo.get(
+    '/api/carts',
+    async(req,res,next)=>{
+        try {
+            const carts = await Cart.find().populate(
+                            {path: 'products_id', options:{sort: {title: i}}})
+            if(carts){
+                return res.status(200).json({
+                    success: true,
+                    carts
+                })
+            }else{
+                return res.status(404).json({
+                    success: false,
+                    message: 'not found'
+                })
+            }
+        } catch (error) {
+            next(error)
+        }}
+)
+carts_mongo.get(
+    '/api/carts/bills/:cid',
+    async(req,res,next)=>{
+        try {
+            const cid = req.params.cid
+            const cart = await Cart.findById(cid).populate('products_id')
+            let total = 0
+            for(const product of cart.products){
+                total += product.price
+            }
+            if(cart){
+                return res.status(200).json({
+                    success: true,
+                    total
+                })
+            }else{
+                return res.status(404).json({
+                    success: false,
+                    message: 'not found'
+                })
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+carts_mongo.get(
+    '/carts',
+    async(req,res,next)=>{
+        try {
+            const carts = await Cart.find().populate('products_id')
+            const cartsWithTotal = carts.map(cart => {
+                let total = 0
+                for(const product of cart.products){total += product.price}
+                return {...cart.toObject(), total}
+            })
+            res.render('carts', {carts: cartsWithTotal})
+        } catch (error) {
+            next(error)
+        }
+    }
+)
 carts_mongo.put(
     '/:id',
     async(req,res,next)=>{
