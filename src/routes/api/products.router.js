@@ -3,14 +3,24 @@ import productManager from 'file:///C:/Users/usuario/Desktop/Desarrollo/BACKEND/
 
 const product_router = Router()
 
-let index_route = '/'
-let index_function = (req, res) => {
-    let quantity = productManager.getProducts().length
-    console.log(quantity)
-    return res.send(`there are ${quantity} products`)
-}
-product_router.get(index_route, index_function)
-
+product_router.get('/', async(req,res,next)=>{
+    try {
+        let products = await productManager.getProducts()
+        if(products){
+            return res.status(200).json({
+                success: true,
+                products
+            })
+        }else{
+            return res.status(404).json({
+                success: false,
+                message: 'not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+})
 let one_route = '/products/:id'
 let one_function = async (req, res) => {
     try{
@@ -38,7 +48,7 @@ let one_function = async (req, res) => {
         }}
 product_router.get(one_route, one_function)
 
-let query_route = '/products'
+/* let query_route = '/products'
 let query_function = (req, res) => {
     let quantity = req.query.quantity ?? 3
     let products = productManager.getProducts().slice(0, quantity)
@@ -54,7 +64,7 @@ let query_function = (req, res) => {
         })
     }
 }
-product_router.get(query_route, query_function)
+product_router.get(query_route, query_function) */
 
 product_router.post(
     '/',

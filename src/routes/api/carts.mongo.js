@@ -54,6 +54,27 @@ carts_mongo.post(
 
 )
 carts_mongo.get(
+    '/',
+    async(req,res,next) => {
+        try {
+            const carts = await Cart.find()
+            if(carts){
+                return res.status(200).json({
+                    success: true,
+                    data: carts
+                })
+            }else{
+                return res.status(404).json({
+                    success: false,
+                    message: 'cart not found'
+                })
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+carts_mongo.get(
     '/:id',
     async(req,res,next) => {
         try {
@@ -84,7 +105,7 @@ carts_mongo.get(
             if(carts){
                 return res.status(200).json({
                     success: true,
-                    carts
+                    carts: carts
                 })
             }else{
                 return res.status(404).json({
@@ -132,7 +153,7 @@ carts_mongo.get(
                 for(const product of cart.products){total += product.price}
                 return {...cart.toObject(), total}
             })
-            res.render('carts', {carts: cartsWithTotal})
+            res.render('carts', {cartsWithTotal: cartsWithTotal})
         } catch (error) {
             next(error)
         }

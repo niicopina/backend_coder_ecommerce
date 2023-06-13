@@ -1,5 +1,6 @@
-let socket = io();
-let userName;
+let socket = io()
+
+let userName
 
 Swal.fire({
     title: "Write your name",
