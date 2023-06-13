@@ -1,5 +1,6 @@
 import {Router} from 'express'
 import productManager from 'file:///C:/Users/usuario/Desktop/Desarrollo/BACKEND/proyecto/src/managers/products.js'
+import auth from '../../middlewares/auth.js'
 
 const product_router = Router()
 
@@ -67,7 +68,7 @@ let query_function = (req, res) => {
 product_router.get(query_route, query_function) */
 
 product_router.post(
-    '/',
+    '/', auth,
     async (req, res) => {
         try{
             let title = req.body.title ?? null

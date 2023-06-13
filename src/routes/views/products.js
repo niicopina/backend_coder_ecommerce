@@ -1,4 +1,4 @@
-import { Router } from "express";
+/* import { Router } from "express";
 import Product from "../../models/product.model.js";
 
 const products_router = Router()
@@ -11,7 +11,7 @@ products_router.get('/products', async (req, res, next) => {
     } catch (error) {
         next(error);
     }
-});
+}); */
 
 /* products_router.get(
     '/products',
@@ -34,4 +34,4 @@ products_router.get('/products', async (req, res, next) => {
         }
     }
 ) */
-export default products_router
+//export default products_router

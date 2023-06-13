@@ -7,10 +7,17 @@ import { __dirname } from './utils.js'
 import 'dotenv/config.js'
 import logger from 'morgan'
 import { connect } from 'mongoose'
-
+import cookieParser from 'cookie-parser'
+import expressSession from 'express-session'
 
 const server = express()
 
+server.use(expressSession({
+    secret: process.env.SECRET_SESSION,
+    resave: true,
+    saveUninitialized: true
+}))
+server.use(cookieParser(process.env.SECRET_COOKIE))
 server.use('', express.static('public'))
 server.use(express.urlencoded({extended:true}))
 server.use(express.json())

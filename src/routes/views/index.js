@@ -1,4 +1,4 @@
-import { Router } from "express";
+/* import { Router } from "express";
 import newProduct_router from "./newProducts.js";
 import home_router from './home.js'
 import chat_router from "./chat.js";
@@ -13,7 +13,7 @@ router.use('/carts', carts_router)
 router.use('/chat', chat_router)
 router.use('/products', products_router)
 
-export default router
+export default router */
 
 //en el enrutador principal de vistas unicamente llamo a los enrutadores
 //de vistas de recursos
