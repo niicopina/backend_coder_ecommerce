@@ -28,7 +28,7 @@ form.addEventListener('submit', async (e) => {
         })
         if(response.ok){
             alert('product created')
-            //window.location.href = '/api/products'
+            window.location.replace('/products.html')
         } else {
             const errorData = await response.json()
             alert(`Error: ${errorData.message}`)
