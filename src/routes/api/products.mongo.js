@@ -1,5 +1,6 @@
 import {Router} from 'express'
 import Product from '../../models/product.model.js'
+import validator from '../../middlewares/product_validator.js'
 
 const product_mongo = Router()
 

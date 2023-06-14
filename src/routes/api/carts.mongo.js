@@ -132,8 +132,7 @@ carts_mongo.get('/bills/:cid', async(req,res,next)=>{
             {$set: {total: {$multiply: ['$quantity', '$price']}}},
             {$project: {product_id: 0, quantity: 0, price: 0, capacity: 0, __v: 0, active: 0}},
             {$group: {_id: 'product_id', sum: {sum: '$total'}}},
-            {$project: {_id: 0, sum: '$sum'}},
-            {$merge: {into: 'bills'}}
+            {$project: {_id: 0, sum: '$sum'}}
         ])
         if(data){
             return res.status(200).json({

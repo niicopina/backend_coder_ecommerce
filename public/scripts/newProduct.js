@@ -8,6 +8,14 @@ form.addEventListener('submit', async (e) => {
     const code = document.getElementById('code').value
     const stock = document.getElementById('stock').value
 
+    /* fetch('/api/products',{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            title, description, price, thumbnail, code, stock
+        })
+    }).then(()=>res.json())
+        .catch(err=>alert(err.message)) */
     try {
         const response = await fetch('/api/products', {
             method: 'POST',
@@ -20,7 +28,7 @@ form.addEventListener('submit', async (e) => {
         })
         if(response.ok){
             alert('product created')
-            window.location.href = '/products'
+            //window.location.href = '/api/products'
         } else {
             const errorData = await response.json()
             alert(`Error: ${errorData.message}`)

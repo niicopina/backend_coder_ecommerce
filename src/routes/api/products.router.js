@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import productManager from 'file:///C:/Users/usuario/Desktop/Desarrollo/BACKEND/proyecto/src/managers/products.js'
 import auth from '../../middlewares/auth.js'
+import validator from '../../middlewares/product_validator.js'
 
 const product_router = Router()
 
@@ -67,11 +68,30 @@ let query_function = (req, res) => {
 }
 product_router.get(query_route, query_function) */
 
-product_router.post(
-    '/', auth,
+/* product_router.post(
+    '/', //auth,
+    
     async (req, res) => {
-        try{
-            let title = req.body.title ?? null
+        try{let product = await productManager.addProduct(req.body)
+        if(product){
+            return res.status(201).json({
+                success: true,
+                message: 'Product created',
+                product
+            })
+        }else{
+            return res.status(400).json({
+                success: false,
+                message: 'Check data'
+            })
+        }}catch(error){
+            next(error)
+        }
+    }
+) */
+product_router.post('/', async(req,res,next)=>{
+    try {
+        let title = req.body.title ?? null
             let description = req.body.description ?? null
             let price = req.body.price ?? null
             let thumbnail = req.body.thumbnail ?? null
@@ -79,25 +99,21 @@ product_router.post(
             let stock = req.body.stock ?? null
             if(title&&description&&price&&thumbnail&&code&&stock){
             let product = await productManager.addProduct({title, description, price, thumbnail, code, stock})
-                return res.json({
-                    status: 201,
-                    message: 'Created'
+                return res.status(201).json({
+                    success: true,
+                    message: 'Created',
+                    product
                 })
             } else {
-                res.json({
-                    status: 400,
+                res.status(400).json({
+                    success: false,
                     message: 'Check data!'
                     })
                 }
-            }catch(error){
-                return res.json({
-                    status: 500,
-                    message: 'ERROR'
-                })
-            }
-        
+    } catch (error) {
+        next(error)
     }
-)
+})
 product_router.put(
     '/:pid',
     (req, res)=>{
