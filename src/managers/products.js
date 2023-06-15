@@ -47,7 +47,7 @@ class ProductManager {
         }
         products[index] = {
             ...products[index],
-            ...this.updateProduct,
+            ...updatedProduct,
             id: id
         }
         this.saveProductsToFile(products)

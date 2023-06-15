@@ -9,7 +9,7 @@ fetch('/api/products')
                 <div class="card-body flex-column d-flex justify-content-center">
                     <h5 class="card-title text-center">${each.title}</h5>
                     <p class="card-text text-center">${each.description}</p>
-                    <a href="/product?id=${each.id}" class="btn btn-primary">+ info</a>
+                    <a href="/product_detail.html?id=${each.id}" class="btn btn-primary">+ info</a>
                 </div>
             </div>
         </div>

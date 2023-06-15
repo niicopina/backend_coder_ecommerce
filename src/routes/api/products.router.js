@@ -29,7 +29,7 @@ let one_function = async (req, res) => {
         //let parametros = req.params
         let id = Number(req.params.id)
         let one = await productManager.getProductsById(id)
-        console.log(one)
+        console.log(id)
         if(one){
             return res.send({
                 success: true,
