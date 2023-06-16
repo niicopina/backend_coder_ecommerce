@@ -1,4 +1,5 @@
-fetch('/api/products')
+function getProducts(page = 1, title = ''){
+ fetch(`/api/products?page=${page}&title=${encodeURIComponent(title)}`)
     .then(res=>res.json())
     .then(res=>{
         let templates = res.products.map(each=>{
@@ -16,13 +17,39 @@ fetch('/api/products')
         `
         return template
     }).join('')
-    document.getElementById('products').innerHTML = templates})
-    
+    document.getElementById('products').innerHTML = templates
+    generatePagination(res.pagination)
+    })
     .catch(err=>console.log(err))
-/* fetch('/api/products')
-    .then(res=>res.json())
-    .then(res=>res.products.map(each=>{
-        let template = `
-        
-        `
-    })) */
+}
+
+function generatePagination(pagination) {
+    const currentPage = pagination.currentPage;
+    const totalPages = pagination.totalPages;
+  
+    let paginationHTML = '';
+    // Botón para la página anterior
+    if (pagination.previousPage) {
+      paginationHTML += `
+                <button class="btn btn-primary me-2" 
+                onclick="getProducts(${pagination.previousPage}, '${pagination.title}')">Anterior</button>`;
+    }
+    // Botones para las páginas intermedias
+    for (let page = 1; page <= totalPages; page++) {
+      if (page === currentPage) {
+        paginationHTML += `<button class="btn btn-primary me-2 active">${page}</button>`;
+      } else {
+        paginationHTML += `
+            <button class="btn btn-primary me-2" onclick="getProducts(${page},
+                 '${pagination.title}')">${page}</button>`;
+      }
+    }
+    // Botón para la página siguiente
+    if (pagination.nextPage) {
+      paginationHTML += `
+        <button class="btn btn-primary me-2" onclick="getProducts(${pagination.nextPage},
+             '${pagination.title}')">Siguiente</button>`;
+    }
+    document.getElementById('pagination').innerHTML = paginationHTML;
+  }  
+getProducts();

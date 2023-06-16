@@ -4,7 +4,37 @@ import validator from '../../middlewares/product_validator.js'
 
 const product_mongo = Router()
 
-product_mongo.get('/', async(req,res,next) => {
+product_mongo.get('/', async(req,res,next)=>{
+    let page = parseInt(req.query.page) || 1
+    let limit = parseInt(req.query.limit) || 6
+    let title = req.query.title ? new RegExp(req.query.title, 'i') : ''
+    try {
+        const totalCount = await Product.countDocuments({title})
+        const totalPages = Math.ceil(totalCount / limit)
+        let products = await Product.paginate({title}, {limit, page, pagination: true})
+        if(products){
+            const response = {
+                success: true,
+                data: products.docs,
+                pagination: {
+                    totalProducts: totalCount,
+                    totalPages: totalPages,
+                    currentPage: page,
+                    nextPage: page < totalPages ? page -1 : null
+                }
+            }
+            return res.status(200).json(response)
+        }else{
+            return res.status(404).json({
+                success: false,
+                message: 'not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+/* product_mongo.get('/', async(req,res,next) => {
     let page = 1
     if(req.query.page){page = req.query.page}
     let limit = 6
@@ -26,7 +56,7 @@ product_mongo.get('/', async(req,res,next) => {
     } catch (error) {
         next(error)
     }
-})
+}) */
 product_mongo.get(
     '/',
     async(req,res,next)=> {

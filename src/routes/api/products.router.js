@@ -2,6 +2,7 @@ import {Router} from 'express'
 import productManager from 'file:///C:/Users/usuario/Desktop/Desarrollo/BACKEND/proyecto/src/managers/products.js'
 import auth from '../../middlewares/auth.js'
 import validator from '../../middlewares/product_validator.js'
+import Product from '../../models/product.model.js'
 
 const product_router = Router()
 
@@ -50,6 +51,36 @@ let one_function = async (req, res) => {
         }}
 product_router.get(one_route, one_function)
 
+product_router.get('/', async(req,res,next)=>{
+    let page = parseInt(req.query.page) || 1
+    let limit = parseInt(req.query.limit) || 6
+    let title = req.query.title ? new RegExp(req.query.title, 'i') : ''
+    try {
+        const totalCount = await Product.countDocuments({title})
+        const totalPages = Math.ceil(totalCount / limit)
+        let products = await Product.paginate({title}, {limit, page, pagination: true})
+        if(products){
+            const response = {
+                success: true,
+                data: products.docs,
+                pagination: {
+                    totalProducts: totalCount,
+                    totalPages: totalPages,
+                    currentPage: page,
+                    nextPage: page < totalPages ? page -1 : null
+                }
+            }
+            return res.status(200).json(response)
+        }else{
+            return res.status(404).json({
+                success: false,
+                message: 'not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+})
 /* let query_route = '/products'
 let query_function = (req, res) => {
     let quantity = req.query.quantity ?? 3

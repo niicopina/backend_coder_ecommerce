@@ -2,6 +2,8 @@ import { Router } from "express";
 import { fileURLToPath } from 'url';
 import path from 'path';
 import api_router from './api/index.js';
+import product_mongo from "./api/products.mongo.js";
+import product_router from "./api/products.router.js";
 
 const router = Router();
 
@@ -13,9 +15,9 @@ router.get('/', (req, res) => {
   const indexPath = path.join(__dirname, '../public/index.html');
   res.sendFile(indexPath);
 });
-router.get('/products', (req, res) => {
+/* router.get('/products', (req, res) => {
     const filePath = path.resolve('public/html/pages/products.html');
     res.sendFile(filePath);
-  });
-
+  }); */
+router.get('/products', product_router)
 export default router;
