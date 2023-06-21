@@ -34,23 +34,25 @@
             <div class="bx bx-menu" id="menu-icon"></div>
          </div>
     </header>
-    <form class="row g-3" id="login" action="" method="POST">
-        <h1>LOG IN</h1>
-        <div class="col-md-3">
-          <label for="name" class="form-label">Name</label>
-          <input type="text" class="form-control" id="name" value="" required>
+    <form class="custom-form" id="login" action="" method="POST">
+      <div class="custom-form-row">
+        <h2>Log In</h2>
+      </div>
+        <div class="custom-form-row">
+          <label for="name" class="custom-form-label">Name</label>
+          <input type="text" class="custom-form-control" id="name" value="" required>
         </div>
-        <div class="col-md-4">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" id="email" value="" required>
+        <div class="custom-form-row">
+          <label for="email" class="custom-form-label">Email</label>
+          <input type="email" class="custom-form-control" id="email" value="" required>
         </div>
-        <div class="col-md-3">
-          <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" id="password" value="" required>
+        <div class="custom-form-row">
+          <label for="password" class="custom-form-label">Password</label>
+          <input type="password" class="custom-form-control" id="password" value="" required>
         </div>
         
         </div>
-        <div class="col-12">
+        <div class="custom-form-row">
           <button class="btn btn-primary" id="login" type="submit">Log in</button>
           <button class="btn btn-primary" id="signout" type="submit">Sign out</button>
 

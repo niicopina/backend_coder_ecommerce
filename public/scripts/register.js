@@ -6,7 +6,7 @@ document.getElementById('register').addEventListener('click', (e)=>{
         .then(res=>alert(res.message))
         .catch(err=>console.log(err))
 })
-document.getElementById('cookie', (e)=>{
+document.getElementById('cookie').addEventListener('click', (e)=>{
     e.preventDefault()
     fetch('/api/cookies/get')
         .then(res=res.json())
