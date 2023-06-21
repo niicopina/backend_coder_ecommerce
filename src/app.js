@@ -6,7 +6,6 @@ import not_found_handler from './middlewares/notFoundHandler.js'
 import { __dirname } from './utils.js'
 import 'dotenv/config.js'
 import logger from 'morgan'
-import { connect } from 'mongoose'
 import cookieParser from 'cookie-parser'
 import expressSession from 'express-session'
 
