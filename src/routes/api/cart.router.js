@@ -4,7 +4,49 @@ import cartManager from 'file:///C:/Users/usuario/Desktop/Desarrollo/BACKEND/pro
 const cart_router = Router()
 
 //aqui van los put post delete de carrito
-
+cart_router.get(
+    '/',
+    async(req,res,next)=>{
+        try {
+            const carts = await cartManager.getCarts()
+            if(carts){
+                return res.status(200).json({
+                    success: true,
+                    carts
+                })
+            }else{
+                return res.status(404).json({
+                    success: false,
+                    message: 'not found'
+                })
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+cart_router.get(
+    '/:cid',
+    async(req,res,next)=>{
+        try {
+            const cid = req.params.cid
+            const cart = await cartManager.getCartById(cid)
+            if(cart){
+                return res.status(200).json({
+                    success: true,
+                    cart
+                })
+            }else{
+                return res.status(404).json({
+                    success: false,
+                    message: 'not found'
+                })
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+)
 cart_router.post(
     '/',
     async (req, res) => {

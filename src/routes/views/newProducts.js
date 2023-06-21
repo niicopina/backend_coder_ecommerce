@@ -1,4 +1,4 @@
-import { Router } from "express";
+/* import { Router } from "express";
 import productManager from './../../managers/products.js'
 
 const newProduct_router = Router()
@@ -54,4 +54,4 @@ newProduct_router.post(
     }
 )
 
-export default newProduct_router
+export default newProduct_router */

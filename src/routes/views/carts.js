@@ -1,4 +1,4 @@
-import { Router } from "express";
+/* import { Router } from "express";
 import Cart from '../../models/cart.model.js'
 
 const carts_router = Router()
@@ -24,4 +24,4 @@ carts_router.get(
         }
     }
 )
-export default carts_router
+export default carts_router */

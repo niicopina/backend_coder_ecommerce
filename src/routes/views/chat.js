@@ -1,4 +1,4 @@
-import { Router } from "express";
+/* import { Router } from "express";
 
 const chat_router = Router()
 
@@ -16,4 +16,4 @@ chat_router.get('/', async (req, res, next) => {
     }
 })
 
-export default chat_router
+export default chat_router */

@@ -1,23 +1,36 @@
 import {Router} from 'express'
 import productManager from 'file:///C:/Users/usuario/Desktop/Desarrollo/BACKEND/proyecto/src/managers/products.js'
+import auth from '../../middlewares/auth.js'
+import validator from '../../middlewares/product_validator.js'
+import Product from '../../models/product.model.js'
 
 const product_router = Router()
 
-let index_route = '/'
-let index_function = (req, res) => {
-    let quantity = productManager.getProducts().length
-    console.log(quantity)
-    return res.send(`there are ${quantity} products`)
-}
-product_router.get(index_route, index_function)
-
+product_router.get('/', async(req,res,next)=>{
+    try {
+        let products = await productManager.getProducts()
+        if(products){
+            return res.status(200).json({
+                success: true,
+                products
+            })
+        }else{
+            return res.status(404).json({
+                success: false,
+                message: 'not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+})
 let one_route = '/products/:id'
 let one_function = async (req, res) => {
     try{
         //let parametros = req.params
         let id = Number(req.params.id)
         let one = await productManager.getProductsById(id)
-        console.log(one)
+        console.log(id)
         if(one){
             return res.send({
                 success: true,
@@ -38,7 +51,37 @@ let one_function = async (req, res) => {
         }}
 product_router.get(one_route, one_function)
 
-let query_route = '/products'
+product_router.get('/', async(req,res,next)=>{
+    let page = parseInt(req.query.page) || 1
+    let limit = parseInt(req.query.limit) || 6
+    let title = req.query.title ? new RegExp(req.query.title, 'i') : ''
+    try {
+        const totalCount = await Product.countDocuments({title})
+        const totalPages = Math.ceil(totalCount / limit)
+        let products = await Product.paginate({title}, {limit, page, pagination: true})
+        if(products){
+            const response = {
+                success: true,
+                data: products.docs,
+                pagination: {
+                    totalProducts: totalCount,
+                    totalPages: totalPages,
+                    currentPage: page,
+                    nextPage: page < totalPages ? page -1 : null
+                }
+            }
+            return res.status(200).json(response)
+        }else{
+            return res.status(404).json({
+                success: false,
+                message: 'not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+})
+/* let query_route = '/products'
 let query_function = (req, res) => {
     let quantity = req.query.quantity ?? 3
     let products = productManager.getProducts().slice(0, quantity)
@@ -54,13 +97,32 @@ let query_function = (req, res) => {
         })
     }
 }
-product_router.get(query_route, query_function)
+product_router.get(query_route, query_function) */
 
-product_router.post(
-    '/',
+/* product_router.post(
+    '/', //auth,
+    
     async (req, res) => {
-        try{
-            let title = req.body.title ?? null
+        try{let product = await productManager.addProduct(req.body)
+        if(product){
+            return res.status(201).json({
+                success: true,
+                message: 'Product created',
+                product
+            })
+        }else{
+            return res.status(400).json({
+                success: false,
+                message: 'Check data'
+            })
+        }}catch(error){
+            next(error)
+        }
+    }
+) */
+product_router.post('/', async(req,res,next)=>{
+    try {
+        let title = req.body.title ?? null
             let description = req.body.description ?? null
             let price = req.body.price ?? null
             let thumbnail = req.body.thumbnail ?? null
@@ -68,25 +130,21 @@ product_router.post(
             let stock = req.body.stock ?? null
             if(title&&description&&price&&thumbnail&&code&&stock){
             let product = await productManager.addProduct({title, description, price, thumbnail, code, stock})
-                return res.json({
-                    status: 201,
-                    message: 'Created'
+                return res.status(201).json({
+                    success: true,
+                    message: 'Created',
+                    product
                 })
             } else {
-                res.json({
-                    status: 400,
+                res.status(400).json({
+                    success: false,
                     message: 'Check data!'
                     })
                 }
-            }catch(error){
-                return res.json({
-                    status: 500,
-                    message: 'ERROR'
-                })
-            }
-        
+    } catch (error) {
+        next(error)
     }
-)
+})
 product_router.put(
     '/:pid',
     (req, res)=>{

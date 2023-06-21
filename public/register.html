@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles.css">
+        <title>Register</title>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+        <a href="" class="logo"></a>
+        <ul class="navbar-menu">
+          <li><a href="/home.html">Home</a></li>
+          <li><a href="#about">Acerca de</a></li>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="/products.html">Products</a></li>
+          <li><a href="/new.html">New product</a></li>
+          <li><a href="/chat.html">CHAT</a></li>
+          <li><a href="/register.html">Register</a></li>
+          <li><a href="/login.html">Log In</a></li>
+          <li><a href="#contact">Contacto</a></li>
+        </ul>
+      </div>
+
+    <div class="h-icons">
+        <a href=""><i class='bx bx-search'></i></a>
+        <a href="/carts.html">
+            <i class='bx bx-cart' >
+             <span id="cartItemCount" class="badge bg-primary"></span>
+            </i></a>
+        <div class="bx bx-menu" id="menu-icon"></div>
+     </div>
+</header>
+<form class="custom-form" id="newProductForm" action="" method="POST">
+  <div class="custom-form-row">
+    <h2>Registrar nuevo usuario</h2>
+  </div>
+  <div class="custom-form-row">
+      <label for="name" class="custom-form-label">Name</label>
+      <input type="text" class="custom-form-control" id="name" value="" required>
+  </div>
+  <div class="custom-form-row">
+      <label for="email" class="custom-form-label">Email</label>
+      <input type="email" class="custom-form-control" id="email" value="" required>
+  </div>
+  <div class="custom-form-row">
+      <label for="password" class="custom-form-label">Password</label>
+      <input type="password" class="custom-form-control" id="password" value="" required>
+  </div>
+  <div class="custom-form-row">
+      <div class="custom-form-check">
+          <input class="custom-form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+          <label class="custom-form-check-label" for="invalidCheck2">
+              Agree to terms and conditions
+          </label>
+      </div>
+  </div>
+  <div class="custom-form-row">
+      <button class="custom-form-btn custom-form-btn-primary" id="register" type="submit">Register</button>
+      <button class="custom-form-btn custom-form-btn-primary" id="cookie" type="submit">Cookie</button>
+  </div>
+</form>
+    <!-- <form class="row g-3" id="newProductForm" action="" method="POST">
+        <div class="col-md-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" id="name" value="" required>
+        </div>
+        <div class="col-md-4">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" value="" required>
+        </div>
+        <div class="col-md-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" value="" required>
+        </div>
+        
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
+            <label class="form-check-label" for="invalidCheck2">
+              Agree to terms and conditions
+            </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <button class="btn btn-primary" id="register" type="submit">Register</button>
+          <button class="btn btn-primary" id="cookie" type="submit">Cookie</button>
+
+        </div>
+      </form> -->
+      <script src="./scripts/register.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+</body>
+</html>
