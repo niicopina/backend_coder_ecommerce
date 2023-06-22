@@ -1,4 +1,5 @@
-document.getElementById('login').addEventListener('submit',event=>{
+const form = document.getElementById('loginForm')
+form.addEventListener('submit',event=>{
     event.preventDefault()
     let data = {
         email: document.querySelector('#email').value,
