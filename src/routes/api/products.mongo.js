@@ -4,14 +4,17 @@ import validator from '../../middlewares/product_validator.js'
 
 const product_mongo = Router()
 
-product_mongo.get('/', async(req,res,next)=>{
+/* product_mongo.get('/', async(req,res,next)=>{
     let page = parseInt(req.query.page) || 1
     let limit = parseInt(req.query.limit) || 6
     let title = req.query.title ? new RegExp(req.query.title, 'i') : ''
     try {
         const totalCount = await Product.countDocuments({title})
+        
         const totalPages = Math.ceil(totalCount / limit)
+        
         let products = await Product.paginate({title}, {limit, page, pagination: true})
+        
         if(products){
             const response = {
                 success: true,
@@ -20,7 +23,7 @@ product_mongo.get('/', async(req,res,next)=>{
                     totalProducts: totalCount,
                     totalPages: totalPages,
                     currentPage: page,
-                    nextPage: page < totalPages ? page -1 : null
+                    nextPage: page < totalPages ? page + 1 : null
                 }
             }
             return res.status(200).json(response)
@@ -33,7 +36,7 @@ product_mongo.get('/', async(req,res,next)=>{
     } catch (error) {
         next(error)
     }
-})
+}) */
 /* product_mongo.get('/', async(req,res,next) => {
     let page = 1
     if(req.query.page){page = req.query.page}
@@ -79,10 +82,11 @@ product_mongo.get(
     }
 )
 product_mongo.get(
-    '/:id',
+    '/:pid',
     async(req,res,next)=>{
         try {
-            let product = await Product.findById(req.params.id)
+            let {pid} = req.params
+            let product = await Product.findById(pid)
             if(product){
                 return res.status(200).json({
                     success: true,
@@ -129,7 +133,7 @@ product_mongo.put(
             let id = req.params.pid
 
             if(req.params.pid){
-                let response1 = await Product.findByIdAndUpdate(id,{new:true})
+                let response1 = await Product.findByIdAndUpdate(id, req.body, {new:true})
                 let response2 = await Product.updateOne({_id: id})
                 if(response1 && response2){
                     return res.json({
@@ -157,7 +161,7 @@ product_mongo.delete(
             let id = req.params.pid
 
             let response1 = await Product.findByIdAndDelete(id)
-            let response2 = await Product.deleteOne(id)
+            let response2 = await Product.deleteOne({_id: id})
             if(response1 || response2){
                 return res.json({
                     status: 200,

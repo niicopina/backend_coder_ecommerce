@@ -8,9 +8,9 @@ import auth_router from "./auth.js";
 
 const router = Router()
 
-router.use('/products', product_router)
+//router.use('/products', product_router)
 //router.use('/carts', cart_router)
-//router.use('/products', product_mongo)
+router.use('/products', product_mongo)
 router.use('/carts', carts_mongo)
 //router.use('/cookies', cookies_router)
 router.use('/auth', auth_router)

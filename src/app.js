@@ -2,13 +2,14 @@ import express from 'express'
 import router from './routes/index_router.js'
 import errorHandler from './middlewares/errorHandler.js'
 import not_found_handler from './middlewares/notFoundHandler.js'
-//import { engine } from 'express-handlebars'
 import { __dirname } from './utils.js'
 import 'dotenv/config.js'
 import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import expressSession from 'express-session'
 import MongoStore from 'connect-mongo'
+import passport from 'passport'
+import inicializePassport from './config/passport.js'
 
 const server = express()
 
@@ -25,11 +26,15 @@ server.use(cookieParser(process.env.SECRET_COOKIE))
 server.use('', express.static('public'))
 server.use(express.urlencoded({extended:true}))
 server.use(express.json())
+server.use(logger('dev'))
+
 server.use('/', router)
 server.use(errorHandler)
 server.use(not_found_handler)
 
-server.use(logger('dev'))
+inicializePassport()
+server.use(passport.initialize())
+server.use(passport.session())
 
 export default server
 

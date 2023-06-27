@@ -1,8 +1,8 @@
-function getProducts(page = 1, title = ''){
+/* function getProducts(page = 1, title = ''){
  fetch(`/api/products?page=${page}&title=${encodeURIComponent(title)}`)
     .then(res=>res.json())
     .then(res=>{
-        let templates = res.products.map(each=>{
+        let templates = res.data.map(each=>{
         let template = `
         <div class="col-6 col-md-4 col-lg-3">
             <div class="card m-2" style="width: 12rem">
@@ -21,9 +21,52 @@ function getProducts(page = 1, title = ''){
     generatePagination(res.pagination)
     })
     .catch(err=>console.log(err))
+} */
+async function fetchProducts() {
+  try {
+    const response = await fetch('/api/products');
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
 }
 
-function generatePagination(pagination) {
+function renderProducts(response) {
+  const container = document.getElementById('products');
+  container.innerHTML = '';
+
+  if (response) {
+    response.data.forEach((product) => {
+      const productElement = document.createElement('div');
+      productElement.innerHTML = `
+        <div class="col">
+          <div class="card h-100">
+            <img src="${product.thumbnail}" class="card-img-top p-6">
+            <div class="card-body">
+              <h5 class="card-title text-center">${product.title}</h5>
+              <p class="card-text text-center">${product.description}</p>
+              <a href="/product_detail.html?id=${product.id}" class="btn btn-primary">+ info</a>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(productElement);
+    });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const products = await fetchProducts();
+    console.log(products); // Imprimir la respuesta en la consola
+    renderProducts(products);
+  } catch (error) {
+    console.log(error);
+  }})
+
+/* function generatePagination(pagination) {
     const currentPage = pagination.currentPage;
     const totalPages = pagination.totalPages;
   
@@ -52,4 +95,4 @@ function generatePagination(pagination) {
     }
     document.getElementById('pagination').innerHTML = paginationHTML;
   }  
-getProducts();
+getProducts(); */
