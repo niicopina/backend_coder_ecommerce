@@ -120,7 +120,7 @@ product_router.get(query_route, query_function) */
         }
     }
 ) */
-product_router.post('/', async(req,res,next)=>{
+product_router.post('/',auth, async(req,res,next)=>{
     try {
         let title = req.body.title ?? null
             let description = req.body.description ?? null

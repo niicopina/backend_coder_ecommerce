@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet"
+        href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gemunu+Libre:wght@800&family=Raleway:wght@100;200;300;500;600;700;900&display=swap" 
+        rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
         <title>Register</title>
 </head>
@@ -34,13 +40,21 @@
         <div class="bx bx-menu" id="menu-icon"></div>
      </div>
 </header>
-<form class="custom-form" id="newProductForm" action="" method="POST">
+<form class="custom-form" id="newUser" action="/api/auth/register" method="POST">
   <div class="custom-form-row">
     <h2>Registrar nuevo usuario</h2>
   </div>
   <div class="custom-form-row">
-      <label for="name" class="custom-form-label">Name</label>
-      <input type="text" class="custom-form-control" id="name" value="" required>
+    <label for="name" class="custom-form-label">Name</label>
+    <input type="text" class="custom-form-control" id="name" value="" required>
+  </div>
+  <div class="custom-form-row">
+    <label for="age" class="custom-form-label">Age</label>
+    <input type="number" class="custom-form-control" id="age" value="" required>
+  </div>
+  <div class="custom-form-row">
+    <label for="photo" class="custom-form-label">Url photo</label>
+    <input type="text" class="custom-form-control" id="photo" value="" required>
   </div>
   <div class="custom-form-row">
       <label for="email" class="custom-form-label">Email</label>
@@ -60,7 +74,7 @@
   </div>
   <div class="custom-form-row">
       <button class="custom-form-btn custom-form-btn-primary" id="register" type="submit">Register</button>
-      <button class="custom-form-btn custom-form-btn-primary" id="cookie" type="submit">Cookie</button>
+      
   </div>
 </form>
     <!-- <form class="row g-3" id="newProductForm" action="" method="POST">

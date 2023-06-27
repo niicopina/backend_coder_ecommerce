@@ -124,7 +124,7 @@ carts_mongo.get('/bills/:cid', async(req,res,next)=>{
             {$match: {product_id: new Types.ObjectId(req.params.cid)}},
             {$lookup: {
                 foreignField: '_id', from: 'products',
-                localField: 'product_id', as: 'product_id'
+                localField: 'products.product_id', as: 'product_id'
             }},
             {$replaceRoot: {newRoot:{
                 $mergeObjects: [{$arrayElemAt: ['$product_id', 0]}, '$$ROOT']

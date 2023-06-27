@@ -246,3 +246,9 @@ section{
 .custom-form-btn-primary:hover {
     background-color: #0069d9;
 }
+main{
+    margin-left: 12rem;
+}
+.carts-container{
+    margin-left: 14rem;
+}

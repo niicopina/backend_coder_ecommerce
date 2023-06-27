@@ -18,7 +18,7 @@ function renderCarts(response){
                 <div class="card-body">
                     <h5 class="card-title"></h5>
                     <p class="card-text">Cart ID: ${cart._id}</p>
-                    <p class="card-text">Total: ${cart.product}</p>
+                    <p class="card-text">Productos: ${cart.product_id}</p>
                     <p class="card-text">Total: ${cart.quantity}</p>
                     <ul>
                     ${cart.products && cart.products.length > 0

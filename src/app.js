@@ -6,16 +6,20 @@ import not_found_handler from './middlewares/notFoundHandler.js'
 import { __dirname } from './utils.js'
 import 'dotenv/config.js'
 import logger from 'morgan'
-import { connect } from 'mongoose'
 import cookieParser from 'cookie-parser'
 import expressSession from 'express-session'
+import MongoStore from 'connect-mongo'
 
 const server = express()
 
 server.use(expressSession({
     secret: process.env.SECRET_SESSION,
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.LINK_MONGO,
+        ttl: 10000
+    })
 }))
 server.use(cookieParser(process.env.SECRET_COOKIE))
 server.use('', express.static('public'))
