@@ -4,6 +4,7 @@ import validator from "../../middlewares/logValidator.js"
 import passIs8 from '../../middlewares/passIs8.js'
 import create_hash from "../../middlewares/create_hash.js"
 import isValidPassword from "../../middlewares/isValidPassword.js"
+import passport from "passport"
 
 const auth_router = Router()
 
@@ -70,4 +71,17 @@ auth_router.post('/signout', async(req,res,next)=>{
         next(error)
     }
 })
+auth_router.get(
+    '/github',
+    passport.authenticate('github',{scope:['user:email']}),
+    (req,res)=>{})
+
+auth_router.get(
+    '/github/callback',
+    passport.authenticate('github',{failureRedirect: '/api/auth/fail-register-github'}),
+    (req,res) => res.status(200).redirect('/')
+    )
+auth_router.get('/fail-register-github',(req,res)=>res.status(403).json({
+    success:false, message: 'bad auth'
+}))
 export default auth_router

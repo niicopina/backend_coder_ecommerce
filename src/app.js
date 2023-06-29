@@ -9,6 +9,8 @@ import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import expressSession from 'express-session'
 import MongoStore from 'connect-mongo'
+import initializePassport from './config/passport.js'
+import passport from 'passport'
 
 const server = express()
 
@@ -24,6 +26,10 @@ server.use(expressSession({
 server.use(cookieParser(process.env.SECRET_COOKIE))
 server.use('', express.static('public'))
 server.use(express.urlencoded({extended:true}))
+
+initializePassport()
+server.use(passport.initialize())
+server.use(passport.session())
 server.use(express.json())
 server.use('/', router)
 server.use(errorHandler)
