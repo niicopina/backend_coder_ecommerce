@@ -14,6 +14,13 @@ form.addEventListener('submit',event=>{
         .then(res=>alert(res.message))
         .catch(err=>alert(err))
 })
+document.getElementById('ghlogin').addEventListener('click', event=>{
+    event.preventDefault()
+    fetch(`/api/auth/github`,{method: 'GET'})
+        .then(res=>res.json())
+        .then(res=>alert(res.message))
+        .catch(err=>alert(err))
+})
 document.getElementById('signout').addEventListener('submit', event=>{
     event.preventDefault()
     fetch(`/api/auth/signout`,{method: 'POST'})

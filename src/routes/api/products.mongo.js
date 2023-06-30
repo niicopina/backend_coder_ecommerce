@@ -1,6 +1,8 @@
 import {Router} from 'express'
 import Product from '../../models/product.model.js'
 import validator from '../../middlewares/product_validator.js'
+import passport from 'passport'
+import passport_call from '../../middlewares/passport_call.js'
 
 const product_mongo = Router()
 
@@ -59,6 +61,7 @@ product_mongo.get('/', async(req,res,next)=>{
 }) */
 product_mongo.get(
     '/',
+    passport_call('jwt'),
     async(req,res,next)=> {
         try {
             let products = await Product.find()
