@@ -79,7 +79,7 @@ export default function(){
             }
         )
     )
-    passport.use( //esta solo sirve para autenticar usuarios
+    passport.use( 
         'jwt',
         new jwt.Strategy(
             {secretOrKey: process.env.SECRET_JWT, 

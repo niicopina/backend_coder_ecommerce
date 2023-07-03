@@ -89,7 +89,9 @@ auth_router.post(
 auth_router.get(
     '/github',
     passport.authenticate('github',{scope:['user:email']}),
-    (req,res)=>{})
+    (req,res)=>{
+       
+    })
 
 auth_router.get(
     '/github/callback',
