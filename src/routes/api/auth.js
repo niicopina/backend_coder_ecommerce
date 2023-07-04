@@ -92,12 +92,17 @@ auth_router.get(
     (req,res)=>{
        
     })
-
-auth_router.get(
-    '/github/callback',
-    passport.authenticate('github',{failureRedirect: '/api/auth/fail-register-github'}),
-    (req,res) => res.status(200).redirect('/')
-    )
+auth_router.get('/github/callback',
+    passport.authenticate('github',{ failureRedirect:'/fail-register-github' }),
+        (req,res)=> {
+            req.session.user = req.user
+            return res.status(201).json({
+                success: true,
+                message: 'user created!',
+                user: req.user
+            })
+    }
+)
 auth_router.get('/fail-register-github',(req,res)=>res.status(403).json({
     success:false, message: 'bad auth'
 }))

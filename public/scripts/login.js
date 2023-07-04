@@ -16,7 +16,7 @@ form.addEventListener('submit',event=>{
 })
 document.getElementById('ghlogin').addEventListener('click', event=>{
     event.preventDefault()
-    fetch(`/api/auth/github`,{method: 'GET', redirect: 'follow'})
+    fetch(`/api/auth/github`,{method: 'GET'})
         .then(res=>res.json())
         .then(res=>alert(res.message))
         .catch(err=>alert(err))
