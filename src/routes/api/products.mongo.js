@@ -3,63 +3,28 @@ import Product from '../../models/product.model.js'
 import validator from '../../middlewares/product_validator.js'
 import passport from 'passport'
 import passport_call from '../../middlewares/passport_call.js'
+//import authJwt from '../../middlewares/authJwt.js'
 
 const product_mongo = Router()
 
-product_mongo.get('/', async(req,res,next)=>{
-    let page = parseInt(req.query.page) || 1
-    let limit = parseInt(req.query.limit) || 6
-    let title = req.query.title ? new RegExp(req.query.title, 'i') : ''
+product_mongo.get('/',async(req,res,next)=>{
     try {
-        const totalCount = await Product.countDocuments({title})
-        const totalPages = Math.ceil(totalCount / limit)
-        let products = await Product.paginate({title}, {limit, page, pagination: true})
-        if(products){
-            const response = {
-                success: true,
-                data: products.docs,
-                pagination: {
-                    totalProducts: totalCount,
-                    totalPages: totalPages,
-                    currentPage: page,
-                    nextPage: page < totalPages ? page -1 : null
-                }
-            }
-            return res.status(200).json(response)
-        }else{
-            return res.status(404).json({
-                success: false,
-                message: 'not found'
-            })
-        }
+        const {
+            docs, 
+            hasNextPage, 
+            prevPage, 
+            nextPage, 
+            totalDocs
+        } = await Product.paginate({}, {limit: 10, page: 1, lean: true})
+        res.status(200).send({
+            success: true,
+            payload: docs
+        })
     } catch (error) {
         next(error)
     }
 })
-/* product_mongo.get('/', async(req,res,next) => {
-    let page = 1
-    if(req.query.page){page = req.query.page}
-    let limit = 6
-    if(req.query.limit){limit = req.query.limit}
-    let title = req.query.title ? new RegExp(req.query.title, 'i') : ''
-    try {
-        let products = await Product.paginate({title},{limit,page})
-        if(products){
-            return res.status(200).json({
-                success: true,
-                data: products
-            })
-        }else{
-            return res.status(404).json({
-                success: false,
-                message: 'not found'
-            })
-        }
-    } catch (error) {
-        next(error)
-    }
-}) */
-product_mongo.get(
+/* product_mongo.get(
     '/',
     passport_call('jwt'),
     async(req,res,next)=> {
@@ -80,12 +45,13 @@ product_mongo.get(
             next(error)
         }
     }
-)
+) */
 product_mongo.get(
-    '/:id',
+    '/:pid',
     async(req,res,next)=>{
         try {
-            let product = await Product.findById(req.params.id)
+            const {pid} = req.params
+            let product = await Product.findOne({_id: pid})
             if(product){
                 return res.status(200).json({
                     success: true,
@@ -181,3 +147,58 @@ product_mongo.delete(
 )
 
 export default product_mongo
+
+
+/* product_mongo.get('/', async(req,res,next)=>{
+    let page = parseInt(req.query.page) || 1
+    let limit = parseInt(req.query.limit) || 6
+    let title = req.query.title ? new RegExp(req.query.title, 'i') : ''
+    try {
+        const totalCount = await Product.countDocuments({title})
+        const totalPages = Math.ceil(totalCount / limit)
+        let products = await Product.paginate({title}, {limit, page, pagination: true})
+        if(products){
+            const response = {
+                success: true,
+                data: products.docs,
+                pagination: {
+                    totalProducts: totalCount,
+                    totalPages: totalPages,
+                    currentPage: page,
+                    nextPage: page < totalPages ? page -1 : null
+                }
+            }
+            return res.status(200).json(response)
+        }else{
+            return res.status(404).json({
+                success: false,
+                message: 'not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+}) */
+/* product_mongo.get('/', async(req,res,next) => {
+    let page = 1
+    if(req.query.page){page = req.query.page}
+    let limit = 6
+    if(req.query.limit){limit = req.query.limit}
+    let title = req.query.title ? new RegExp(req.query.title, 'i') : ''
+    try {
+        let products = await Product.paginate({title},{limit,page})
+        if(products){
+            return res.status(200).json({
+                success: true,
+                data: products
+            })
+        }else{
+            return res.status(404).json({
+                success: false,
+                message: 'not found'
+            })
+        }
+    } catch (error) {
+        next(error)
+    }
+}) */
