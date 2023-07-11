@@ -7,7 +7,27 @@ import passport_call from '../../middlewares/passport_call.js'
 
 const product_mongo = Router()
 
-product_mongo.get('/',async(req,res,next)=>{
+product_mongo.get('/', async (req, res, next) => {
+    try {
+      const { page, title } = req.query;
+      const options = { limit: 10, page: parseInt(page), lean: true };
+      const result = await Product.paginate({}, options);
+  
+      res.status(200).json({
+        success: true,
+        payload: result.docs,
+        pagination: {
+          currentPage: result.page,
+          totalPages: result.totalPages,
+          title: title
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+/* product_mongo.get('/',async(req,res,next)=>{
     try {
         const {
             docs, 
@@ -23,7 +43,7 @@ product_mongo.get('/',async(req,res,next)=>{
     } catch (error) {
         next(error)
     }
-})
+}) */
 /* product_mongo.get(
     '/',
     passport_call('jwt'),

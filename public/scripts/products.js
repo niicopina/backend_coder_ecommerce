@@ -2,7 +2,7 @@ function getProducts(page = 1, title = ''){
  fetch(`/api/products?page=${page}&title=${encodeURIComponent(title)}`)
     .then(res=>res.json())
     .then(res=>{
-        let templates = res.products.map(product=>{
+        let templates = res.payload.map(product=>{
         let template = `
         <div class="col-6 col-md-4 col-lg-3">
             <div class="card m-2" style="width: 12rem">
@@ -24,7 +24,11 @@ function getProducts(page = 1, title = ''){
 }
 
 function generatePagination(pagination) {
-    const currentPage = pagination.currentPage;
+  if(!pagination){
+    return;
+  }  
+  
+  const currentPage = pagination.currentPage;
     const totalPages = pagination.totalPages;
   
     let paginationHTML = '';
