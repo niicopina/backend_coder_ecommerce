@@ -13,7 +13,7 @@ export default function(){
     )
     passport.deserializeUser(
         async(id,done) => {
-            const user = await User.findById(id)
+            const user = await User.findById({_id})
             return done(null,user)
         }
     )
