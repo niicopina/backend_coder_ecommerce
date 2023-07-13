@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken'
 
-export default(req,res,next)=>{
+export default function createToken(req,res,next){
     let token = jwt.sign(
         {email:req.body.email},
         process.env.SECRET_JWT,

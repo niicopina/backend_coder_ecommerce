@@ -2,6 +2,7 @@ import server from "./app.js"
 import { Server } from "socket.io"
 import { connect } from "mongoose"
 
+//config.connectDB()
 const port = process.env.PORT || 8000
 const ready = () => {
     console.log('server ready on port '+ port)

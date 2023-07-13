@@ -8,6 +8,7 @@ import passport from "passport"
 import passwordIsOk from "../../middlewares/passwordIsOk.js"
 import createToken from "../../middlewares/createToken.js"
 import passport_call from './../../middlewares/passport_call.js'
+import jwt from 'jsonwebtoken';
 
 const auth_router = Router()
 
@@ -86,6 +87,9 @@ auth_router.post(
         })
     }
 )
+auth_router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
+    res.json({ user: req.user });
+  });
 auth_router.get(
     '/github',
     passport.authenticate('github',{scope:['user:email']}),

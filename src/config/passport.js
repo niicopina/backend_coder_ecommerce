@@ -2,6 +2,8 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import GHStrategy from 'passport-github2'
 import jwt from 'passport-jwt'
+import jwt from 'jsonwebtoken'
+import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt'
 import User from '../models/user.model.js'
 
 const {GH_CLIENT_ID, GH_CLIENT_SECRET} = process.env
@@ -11,12 +13,14 @@ export default function(){
     passport.serializeUser(
         (user,done) => done(null, user._id)
     )
-    passport.deserializeUser(
-        async(id,done) => {
-            const user = await User.findById({_id})
-            return done(null,user)
+    passport.deserializeUser(async (_id, done) => {
+        try {
+          const user = await User.findById(_id)
+          return done(null, user)
+        } catch (error) {
+          return done(error)
         }
-    )
+      })
     passport.use(
         'register',
         new Strategy(
@@ -79,7 +83,29 @@ export default function(){
             }
         )
     )
-    passport.use( 
+    passport.use(
+        'jwt',
+        new JwtStrategy(
+          {
+            secretOrKey: SECRET_JWT,
+            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
+          },
+          async (jwt_payload, done) => {
+            try {
+              let one = await User.findOne({ email: jwt_payload.email })
+              if (one) {
+                delete one.password
+                return done(null, one)
+              } else {
+                return done(null, false)
+              }
+            } catch (error) {
+              return done(error)
+            }
+          }
+        )
+      )
+    /* passport.use( 
         'jwt',
         new jwt.Strategy(
             {secretOrKey: process.env.SECRET_JWT, 
@@ -98,5 +124,5 @@ export default function(){
                 }
             }
         )
-    )
+    ) */
 }
