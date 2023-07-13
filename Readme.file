@@ -1,4 +1,4 @@
-Se trata de un proyecto en el que se manejan cuatro archivos diferentes para implementar una API:
+E-commerce basado en una pasteleria
 
 1. server.js
 Este archivo es el archivo principal de la API. Aquí se importa Express y el archivo main.js. Luego se crea una instancia de Express y se configura para que escuche en el puerto 8000.
