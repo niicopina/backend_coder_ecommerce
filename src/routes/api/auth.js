@@ -42,6 +42,7 @@ auth_router.get('/',async(req,res)=> {
 }) */
 auth_router.post(
     '/register',
+    validator,
     create_hash,
     passport.authenticate('register',{failureRedirect: '/fail-register'}),
     async(req,res,next)=>{
@@ -58,25 +59,24 @@ auth_router.post(
 auth_router.get('/fail-register',(req,res)=>res.status(403).json({
     success:false, message: 'bad auth'
 }))
-
-auth_router.post('/login',
-    validator,
-    //passIs8,
-    passport.authenticate('login',{failureRedirect:'/api/auth/fail-login'}),
-    //passwordIsOk,
-    isValidPassword,
+auth_router.post(
+    '/login',
+    passport.authenticate('login', { session: false }),
     createToken,
-    async(req,res,next)=>{
-    try {
-        return res.status(200).cookie('token', req.token,{maxAge:60*60*24*7}.json({
+    (req, res) => {
+      try {
+        return res
+          .status(200)
+          .cookie('token', req.token, { maxAge: 60 * 60 * 24 * 7 })
+          .json({
             success: true,
-            message: 'user logged in!'
-        })
-)
-    } catch (error) {
-        next(error)
+            message: 'User logged in!'
+          });
+      } catch (error) {
+        return next(error)
+      }
     }
-})
+  );
 auth_router.post(
     '/signout',
     passport_call('jwt',{session: false}),
