@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from 'dotenv'
 import commander from "../utils/commander.js";
+import MongoSingleton from "./MongoSingleton.js";
 
 const {mode} = commander.opts()
 
@@ -13,10 +14,11 @@ exports.config = {
     port: process.env.PORT || 8000,
     mongo_url: process.env.LINK_MONGO,
     connectDB: async () =>{
-        try {
+        MongoSingleton.getInstance()
+        /* try {
             await mongoose.connect('mongodb+srv://pinanicolasagustin:ellipsis@dbnicopina.wuf76cz.mongodb.net/ecommerce')
         } catch (error) {
             console.log('errir de conexion')
-        }
+        } */
     }
 }

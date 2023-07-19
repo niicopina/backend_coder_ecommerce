@@ -1,14 +1,17 @@
 import { Router } from "express"
-import User from "../../models/user.model.js"
 import validator from "../../middlewares/logValidator.js"
-import passIs8 from '../../middlewares/passIs8.js'
 import create_hash from "../../middlewares/create_hash.js"
-import isValidPassword from "../../middlewares/isValidPassword.js"
 import passport from "passport"
-import passwordIsOk from "../../middlewares/passwordIsOk.js"
 import createToken from "../../middlewares/createToken.js"
 import passport_call from './../../middlewares/passport_call.js'
+import passportSession from '../../config/passportSession.js'
+
 import jwt from 'jsonwebtoken';
+import User from "../../models/user.model.js"
+import passIs8 from '../../middlewares/passIs8.js'
+import isValidPassword from "../../middlewares/isValidPassword.js"
+import passwordIsOk from "../../middlewares/passwordIsOk.js"
+
 
 const auth_router = Router()
 
@@ -42,7 +45,6 @@ auth_router.get('/',async(req,res)=> {
 }) */
 auth_router.post(
     '/register',
-    validator,
     create_hash,
     passport.authenticate('register',{failureRedirect: '/fail-register'}),
     async(req,res,next)=>{

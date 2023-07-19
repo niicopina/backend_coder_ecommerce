@@ -2,9 +2,8 @@ const form = document.getElementById('newUser')
 form.addEventListener('submit', (event)=>{
     event.preventDefault()
     let data = {
-        name: document.querySelector('#name').value,
-        photo: document.querySelector('#photo').value,
-        age: document.querySelector('#age').value,
+        first_name: document.querySelector('#first_name').value,
+        last_name: document.querySelector('#last_name').value,
         email: document.querySelector('#email').value,
         password: document.querySelector('#password').value
     }

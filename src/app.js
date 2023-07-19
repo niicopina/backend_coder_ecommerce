@@ -9,8 +9,12 @@ import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import expressSession from 'express-session'
 import MongoStore from 'connect-mongo'
-import initializePassport from './config/passport.js'
+import passportGitHub from './config/passportGitHub.js'
+import passportJwt from './config/passportJWT.js'
+import passportSession from './config/passportSession.js'
 import passport from 'passport'
+import cors from 'cors'
+
 
 const server = express()
 
@@ -27,7 +31,9 @@ server.use(cookieParser(process.env.SECRET_COOKIE))
 server.use('', express.static('public'))
 server.use(express.urlencoded({extended:true}))
 
-initializePassport()
+passportGitHub()
+passportJwt()
+passportSession()
 server.use(passport.initialize())
 server.use(passport.session())
 server.use(express.json())
@@ -36,6 +42,8 @@ server.use(errorHandler)
 server.use(not_found_handler)
 
 server.use(logger('dev'))
+
+server.use(cors())
 
 export default server
 

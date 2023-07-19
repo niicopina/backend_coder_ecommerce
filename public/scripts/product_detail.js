@@ -1,18 +1,18 @@
 const params = new URLSearchParams(location.search)
 console.log(params)
-const id = Number(params.get('id'))
+const id = params.get('id')
 console.log(id)
-fetch('/api/products/products/'+id)
+fetch('/api/products/id')
     .then(res=>res.json())
     .then(res=>{
         console.log(res)
         let template = `
         <div class="card" style="width: 18rem">
-            <img src="${res.product.thumbnail}" class="card-img-top" style="width: 10rem; height: 8rem">
+            <img src="${product.thumbnail}" class="card-img-top" style="width: 10rem; height: 8rem">
             <div class="card-body">
-                <h5 class="card-title">"${res.product.title}"</h5>
-                <p class="card-text">"${res.product.description}"</p>
-                <p class="card-text">"${res.product.price}"</p>
+                <h5 class="card-title">"${res.title}"</h5>
+                <p class="card-text">"${res.description}"</p>
+                <p class="card-text">"${res.price}"</p>
                 <input type='number'>
                 <input type='button' id="addToCartBtn" value='add to cart'>
             </div>

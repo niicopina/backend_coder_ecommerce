@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { model, Schema } from "mongoose";
 
 const collection = 'users'
 const schema = new Schema({

@@ -20,4 +20,5 @@ router.get('/', (req, res) => {
     res.sendFile(filePath);
   }); */
 router.get('/products', product_mongo)
+
 export default router;

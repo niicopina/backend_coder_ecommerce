@@ -20,7 +20,15 @@ document.getElementById('ghlogin').addEventListener('click', event=>{
         .then(res=>res.json())
         .then(res=>alert(res.message))
         .catch(err=>alert(err))
+     //window.location.href = '/api/auth/github';
+     //window.location.replace('/home.html')
 })
+/* document.getElementById('ghlogin').addEventListener('click', (event) => {
+    event.preventDefault();
+    window.location.href = '/api/auth/github';
+});
+ */
+
 document.getElementById('signout').addEventListener('submit', event=>{
     event.preventDefault()
     fetch(`/api/auth/signout`,{method: 'POST'})
