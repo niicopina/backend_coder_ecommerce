@@ -7,10 +7,10 @@ class ProductDaoMongo {
     getProducts = async(req, res) => {
 
     }
-    getProduct = async(req,res, pid) => {
+    getProduct = async(pid) => {
         return await this.Product.findOne({_id: pid})
         }
-    createProduct = async(req, res) => {
+    createProduct = async(req) => {
         return await this.Product.create(req.body)
     }
     updateProduct = async(pid) => {
