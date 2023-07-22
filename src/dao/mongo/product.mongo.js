@@ -1,23 +1,23 @@
-import Product from "../../models/product.model"
+import Product from '../../models/product.model.js'
 
 class ProductDaoMongo {
     constructor(){
         this.Product = Product
     }
-    getProducts = async() => {
-        return await this.Product.paginate({}, {limit: 10, page: 1, lean: true})
+    getProducts = async(req, res) => {
+
     }
-    getProduct = async(pid) => {
+    getProduct = async(req,res, pid) => {
         return await this.Product.findOne({_id: pid})
-    }
-    createProduct = async() => {
-        return await this.Product.create()
+        }
+    createProduct = async(req, res) => {
+        return await this.Product.create(req.body)
     }
     updateProduct = async(pid) => {
-        return await this.Product.findByIdAndUpdate({_id: pid})
+        return await this.Product.findOneAndUpdate({_id:pid},{new:true})
     }
     deleteProduct = async(pid) => {
-        return await this.Product.findByIdAndDelete({_id: pid})
+        return await this.Product.findOneAndDelete({_id: pid})
     }
 }
 

@@ -1,11 +1,11 @@
 import { Router } from "express"
-import validator from "../../middlewares/logValidator.js"
 import create_hash from "../../middlewares/create_hash.js"
 import passport from "passport"
 import createToken from "../../middlewares/createToken.js"
 import passport_call from './../../middlewares/passport_call.js'
-import passportSession from '../../config/passportSession.js'
 
+import passportSession from '../../config/passportSession.js'
+import validator from "../../middlewares/logValidator.js"
 import jwt from 'jsonwebtoken';
 import User from "../../models/user.model.js"
 import passIs8 from '../../middlewares/passIs8.js'

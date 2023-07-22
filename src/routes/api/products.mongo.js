@@ -1,5 +1,7 @@
 import {Router} from 'express'
 import Product from '../../models/product.model.js'
+import ProductDaoMongo from '../../dao/mongo/product.mongo.js'
+
 import validator from '../../middlewares/product_validator.js'
 import passport from 'passport'
 import passport_call from '../../middlewares/passport_call.js'
@@ -7,25 +9,127 @@ import passport_call from '../../middlewares/passport_call.js'
 
 const product_mongo = Router()
 
+const productDao = new ProductDaoMongo()
+
 product_mongo.get('/', async (req, res, next) => {
-    try {
-      const { page, title } = req.query;
-      const options = { limit: 10, page: parseInt(page), lean: true };
-      const result = await Product.paginate({}, options);
-  
-      res.status(200).json({
-        success: true,
-        payload: result.docs,
-        pagination: {
-          currentPage: result.page,
-          totalPages: result.totalPages,
-          title: title
-        }
-      });
+    try {      
+        const { page, title } = req.query;
+        const options = { limit: 10, page: parseInt(page), lean: true };
+        const result = await Product.paginate({}, options);
+    
+        res.status(200).json({
+          success: true,
+          payload: result.docs,
+          pagination: {
+            currentPage: result.page,
+            totalPages: result.totalPages,
+            title: title
+          }
+        });
     } catch (error) {
       next(error);
     }
   });
+
+product_mongo.get(
+    '/:pid',
+    async(req,res,next)=>{
+        try {
+            const {pid} = req.params
+            let product = await Product.findOne({_id: pid})
+            if(product){
+                return res.status(200).json({
+                    success: true,
+                    data: product
+                })
+            }else{
+                return res.status(404).json({
+                    success: false,
+                    message: 'not found'
+                })
+            }
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+product_mongo.post(
+    '/',
+    async (req, res, next) => {
+        try{            
+            let product = await productDao.createProduct(req) // usando mongo
+
+            if(product){
+            return res.status(201).json({
+                success: true,
+                message: 'created!',
+                product
+            })
+            } else {
+                res.status(404).json({
+                    success: false,
+                    message: 'Check data!'
+                    })
+                }
+            }catch(error){
+                next(error)
+            }   
+    }
+)
+product_mongo.put(
+    '/:pid',
+    async (req, res, next)=>{
+        try {
+            const {pid} = req.params
+
+            if(req.params){
+                //let response1 = await Product.findByIdAndUpdate(pid,{new:true})
+                let response2 = await productDao.updateProduct({_id:pid})
+                if(response2){
+                    return res.json({
+                        status: 200,
+                        message: 'Product updated',
+                        //response1,
+                        response2
+                    })
+                }
+                }else{
+                return res.json({
+                    status: 400,
+                    message: 'Check data!'
+                })
+        }
+        } catch (error) {
+            next(error)
+        }
+    }
+)
+product_mongo.delete(
+    '/:pid',
+    async (req,res, next)=>{
+        try{
+            let {pid} = req.params
+
+            let response1 = await productDao.deleteProduct({_id: pid})
+            if(response1){
+                return res.json({
+                    status: 200,
+                    message: 'Product deleted success',
+                    response1
+                })
+            }else{
+                return res.json({
+                    status: 400,
+                    message: 'Seems to be a problem with the Id'
+                })
+            }
+        }catch(error){
+            next(error)
+        }
+    }
+)
+
+export default product_mongo
 
 /* product_mongo.get('/',async(req,res,next)=>{
     try {
@@ -66,108 +170,6 @@ product_mongo.get('/', async (req, res, next) => {
         }
     }
 ) */
-product_mongo.get(
-    '/:pid',
-    async(req,res,next)=>{
-        try {
-            const {pid} = req.params
-            let product = await Product.findOne({_id: pid})
-            if(product){
-                return res.status(200).json({
-                    success: true,
-                    data: product
-                })
-            }else{
-                return res.status(404).json({
-                    success: false,
-                    message: 'not found'
-                })
-            }
-        } catch (error) {
-            next(error)
-        }
-    }
-)
-product_mongo.post(
-    '/',
-    async (req, res) => {
-        try{            
-            let product = await Product.create(req.body) // usando mongo
-
-            if(product){
-            return res.status(201).json({
-                success: true,
-                message: 'created!',
-                product
-            })
-            } else {
-                res.status(404).json({
-                    success: false,
-                    message: 'Check data!'
-                    })
-                }
-            }catch(error){
-                console.error(error)
-            }   
-    }
-)
-product_mongo.put(
-    '/:pid',
-    async (req, res)=>{
-        try {
-            let id = req.params.pid
-
-            if(req.params.pid){
-                let response1 = await Product.findByIdAndUpdate(id,{new:true})
-                let response2 = await Product.updateOne({_id: id})
-                if(response1 && response2){
-                    return res.json({
-                        status: 200,
-                        message: 'Product updated',
-                        response1,
-                        response2
-                    })
-                }
-                }else{
-                return res.json({
-                    status: 400,
-                    message: 'Check data!'
-                })
-        }
-        } catch (error) {
-            next(error)
-        }
-    }
-)
-product_mongo.delete(
-    '/:pid',
-    async (req,res)=>{
-        try{
-            let id = req.params.pid
-
-            let response1 = await Product.findByIdAndDelete(id)
-            let response2 = await Product.deleteOne(id)
-            if(response1 || response2){
-                return res.json({
-                    status: 200,
-                    message: 'Product deleted success',
-                    response1,
-                    response2
-                })
-            }else{
-                return res.json({
-                    status: 400,
-                    message: 'Seems to be a problem with the Id'
-                })
-            }
-        }catch(error){
-            next(error)
-        }
-    }
-)
-
-export default product_mongo
-
 
 /* product_mongo.get('/', async(req,res,next)=>{
     let page = parseInt(req.query.page) || 1
