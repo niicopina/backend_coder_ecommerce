@@ -4,9 +4,6 @@ class ProductDaoMongo {
     constructor(){
         this.Product = Product
     }
-    getProducts = async(req, res) => {
-
-    }
     getProduct = async(pid) => {
         return await this.Product.findOne({_id: pid})
         }

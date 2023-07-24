@@ -1,14 +1,13 @@
-import Product from '../models/product.model.js'
-import ProductDaoMongo from '../dao/mongo/product.mongo.js'
+import productService from '../service/index.js'
 
 class ProductController{
     constructor(){
-        this.productDao = new ProductDaoMongo()
+        this.productService = productService
     }
     getProduct = async(req,res,next)=>{
         try {
             const {pid} = req.params
-            let product = await this.productDao.getProduct({_id: pid})
+            let product = await this.productService.getProduct({_id: pid})
             if(product){
                 return res.status(200).json({
                     success: true,
@@ -26,7 +25,7 @@ class ProductController{
     }
     createProduct = async (req, res, next) => {
         try{            
-            let product = await this.productDao.createProduct(req) // usando mongo
+            let product = await this.productService.createProduct(req) // usando mongo
 
             if(product){
             return res.status(201).json({
@@ -50,7 +49,7 @@ class ProductController{
 
             if(req.params){
                 //let response1 = await Product.findByIdAndUpdate(pid,{new:true})
-                let response2 = await this.productDao.updateProduct({_id:pid})
+                let response2 = await this.productService.updateProduct({_id:pid})
                 if(response2){
                     return res.json({
                         status: 200,
@@ -73,7 +72,7 @@ class ProductController{
         try{
             let {pid} = req.params
 
-            let response1 = await this.productDao.deleteProduct({_id: pid})
+            let response1 = await this.productService.deleteProduct({_id: pid})
             if(response1){
                 return res.json({
                     status: 200,

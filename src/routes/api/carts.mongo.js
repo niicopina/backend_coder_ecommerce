@@ -2,33 +2,20 @@ import { Router } from "express";
 import Cart from '../../models/cart.model.js'
 import Product from "../../models/product.model.js";
 import { Types } from "mongoose";
+import CartController from '../../controllers/cart.controller.js'
 
 let carts_mongo = Router()
+const cartController = new CartController()
 
-carts_mongo.post(
-    '/',
-    async(req,res,next)=> {
-        try {
-            const {quantity, product_id} = req.body
-            const product = await Product.findById(product_id)
-            if(!product){
-                return res.status(404).json({
-                    success: false,
-                    message: 'product not found'
-                })
-            }
-            const cart = await Cart.create({product_id, quantity})
-            return res.status(201).json({
-                success: true,
-                message: `Cart created, ID: ${cart._id}`,
-                data: cart
-            })
-        } catch (error) {
-            next(error)
-        }
-    }
-)
-carts_mongo.post(
+carts_mongo.get('/', cartController.getCarts)
+carts_mongo.get('/:cid', cartController.getCart)
+carts_mongo.post('/', cartController.createCart)
+carts_mongo.put('/:cartId/addProduct/:productId', cartController.addProductToCart)
+carts_mongo.put('/bills/:cid', cartController.getCartBill)
+carts_mongo.put('/:cid', cartController.updateCart)
+carts_mongo.put('/:cid', cartController.deleteCart)
+
+/* carts_mongo.post(
     '/:cartId/addProduct/:productId',
     async(req,res,next)=>{
         try {
@@ -53,8 +40,8 @@ carts_mongo.post(
         }
     }
 
-)
-carts_mongo.get(
+) */
+/* carts_mongo.get(
     '/',
     async(req,res,next) => {
         try {
@@ -74,8 +61,8 @@ carts_mongo.get(
             next(error)
         }
     }
-)
-carts_mongo.get(
+) */
+/* carts_mongo.get(
     '/:id',
     async(req,res,next) => {
         try {
@@ -98,7 +85,7 @@ carts_mongo.get(
     }
 )
 carts_mongo.get(
-    '/api/carts',
+    '/carts',
     async(req,res,next)=>{
         try {
             const carts = await Cart.find().populate(
@@ -117,8 +104,10 @@ carts_mongo.get(
         } catch (error) {
             next(error)
         }}
-)
-carts_mongo.get('/bills/:cid', async(req,res,next)=>{
+) */
+/* The `carts_mongo.get('/bills/:cid', async(req,res,next)=>{...})` function is creating a new route
+for handling HTTP GET requests to retrieve the total bill for a specific cart. */
+/* carts_mongo.get('/bills/:cid', async(req,res,next)=>{
     try {
         let data = await Cart.aggregate([
             {$match: {product_id: new Types.ObjectId(req.params.cid)}},
@@ -146,7 +135,7 @@ carts_mongo.get('/bills/:cid', async(req,res,next)=>{
     } catch (error) {
         next(error)
     }
-})
+}) */
 
 /* carts_mongo.get(
     '/api/carts/bills/:cid',
@@ -174,7 +163,7 @@ carts_mongo.get('/bills/:cid', async(req,res,next)=>{
         }
     }
 ) */
-carts_mongo.get(
+/* carts_mongo.get(
     '/carts',
     async(req,res,next)=>{
         try {
@@ -213,8 +202,8 @@ carts_mongo.put(
             next(error)
         }
     }
-)
-carts_mongo.delete(
+) */
+/* carts_mongo.delete(
     '/:id',
     async(req,res,next)=> {
         try {
@@ -234,5 +223,5 @@ carts_mongo.delete(
             next(error)
         }
     }
-)
+) */
 export default carts_mongo
