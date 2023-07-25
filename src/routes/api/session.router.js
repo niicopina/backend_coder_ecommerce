@@ -1,5 +1,5 @@
-const Router = require("./router.js")
-const jwt = require('jsonwebtoken')
+import Router from "./router.js";
+import jwt from 'jsonwebtoken'
 
 class SessionRouter extends Router {
     init() {

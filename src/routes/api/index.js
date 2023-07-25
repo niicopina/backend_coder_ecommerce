@@ -11,13 +11,12 @@ import product_mongo from "./products.mongo.js";
 
 const router = Router()
 
-//router.use('/products', product_router)
-router.use('/products', product_mongo)
-router.use('/carts', carts_mongo)
 //router.use('/carts', cart_router)
-
+//router.use('/products', product_router)
 //router.use('/cookies', cookies_router)
 
+router.use('/products', product_mongo)
+router.use('/carts', carts_mongo)
 router.use('/auth', auth_router)
 router.use('/users', UserRouter)
 router.use('/router', RouterClass)
