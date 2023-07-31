@@ -20,6 +20,6 @@ router.get('/', (req, res) => {
     const filePath = path.resolve('public/html/pages/products.html');
     res.sendFile(filePath);
   }); */
-router.get('/products', product_mongo)
+//router.get('/products', product_mongo)
 //router.get('/carts', carts_mongo)
 export default router;

@@ -7,7 +7,7 @@ class ProductController{
     getProduct = async(req,res,next)=>{
         try {
             const {pid} = req.params
-            let product = await this.productService.getProduct({_id: pid})
+            let product = await this.productService.getProduct(pid)
             if(product){
                 return res.status(200).json({
                     success: true,
