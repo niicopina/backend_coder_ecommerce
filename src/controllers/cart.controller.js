@@ -1,5 +1,5 @@
-import cartService from '../service/index.js'
-import productService from '../service/index.js'
+import {cartService} from '../service/index.js'
+import {productService} from '../service/index.js'
 import { Types } from "mongoose";
 
 class CartController {

@@ -4,6 +4,7 @@ import path from 'path';
 import api_router from './api/index.js';
 import product_mongo from "./api/products.mongo.js";
 import product_router from "./api/products.router.js";
+import carts_mongo from "./api/carts.mongo.js";
 
 const router = Router();
 
@@ -20,5 +21,5 @@ router.get('/', (req, res) => {
     res.sendFile(filePath);
   }); */
 router.get('/products', product_mongo)
-
+//router.get('/carts', carts_mongo)
 export default router;

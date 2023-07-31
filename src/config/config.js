@@ -9,10 +9,16 @@ dotenv.config({
     path: mode === 'development' ? './.env.development' : './.env.production'
 })
 
-exports.config = {
-    privateKey: process.env.SECRET_JWT,
-    port: process.env.PORT || 8000,
-    mongo_url: process.env.LINK_MONGO,
+const config = {
+    twilio_sid:     process.env.TWILIO_SID,
+    twilio_token:   process.env.TWILIO_AUTH_TOKEN,
+    twilio_phone:   process.env.TWILIO_PHONE_NUMBER,
+    my_phone:       process.env.MY_PHONE_NUMBER,
+    gmail_user_app: process.env.GMAIL_USER_APP,
+    gmail_pass_app: process.env.GMAIL_PASS_APP,
+    privateKey:     process.env.SECRET_JWT,
+    port:           process.env.PORT || 8000,
+    mongo_url:      process.env.LINK_MONGO,
     connectDB: async () =>{
         MongoSingleton.getInstance()
         /* try {
@@ -22,3 +28,5 @@ exports.config = {
         } */
     }
 }
+
+export default {config}
