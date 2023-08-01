@@ -24,27 +24,22 @@ class CartController {
             next(error)
         }
     } 
-    /* async (req, res, next) => {
+    createOrGetCart = async (req, res, next) => {
         try {
-          const carts = await cartService.getCarts()
-          const cartsWithTotal = carts.map(cart => {
-            let total = 0;
-            for (const product of cart.products) {
-              total += product.price;
-            }
-            return { ...cart.toObject(), total };
-          });
+          const cart = await this.cartService.createOrGetCart();
           return res.status(200).json({
             success: true,
-            carts: cartsWithTotal
+            message: 'Cart created or retrieved successfully',
+            data: cart,
           });
         } catch (error) {
           next(error);
-        }} */
+        }
+      }
     getCart = async(req,res,next) => {
         try {
             const {cid} = req.params
-            const cart = await this.cartService.getCart({_id: cid})
+            const cart = await this.cartService.getCart(cid)
             if(cart){
                 return res.status(200).json({
                     success: true,
@@ -92,7 +87,7 @@ class CartController {
     createCart = async(req,res,next)=> {
         try {
             const {quantity, product_id} = req.body
-            const product = await this.productService.getProduct(product_id)
+            const product = await productService.getProduct(product_id)
             if(!product){
                 return res.status(404).json({
                     success: false,
@@ -103,59 +98,49 @@ class CartController {
             return res.status(201).json({
                 success: true,
                 message: `Cart created, ID: ${cart._id}`,
-                data: cart
+                data: cart,
+                cartId: cart._id
             })
         } catch (error) {
             next(error)
         }
     }
-    addProductToCart = async (req, res, next) => {
+    updateCart = async (req, res, next) => {
         try {
-          const { cartId, productId } = req.params;
+          const { cartId } = req.params;
+          const { productId, quantity } = req.body;
+    
           const cart = await cartService.getCart(cartId);
           const product = await productService.getProduct(productId);
+    
           if (!cart || !product) {
             return res.status(404).json({
               success: false,
-              message: 'Cart or product not found'
+              message: 'Cart or product not found',
             });
           }
-          cart.product_id = productId;
+    
+          // Agregar el producto al carrito
+          cart.products.push({
+            product_id: productId,
+            quantity: quantity,
+          });
+    
           await cart.save();
+    
           return res.status(200).json({
             success: true,
             message: 'Product added to cart',
-            data: cart
+            data: cart,
           });
         } catch (error) {
           next(error);
-        }
-      }
-    updateCart = async(req,res,next)=>{
-        try {
-            const cid = req.params.id
-            const newProductId = req.body.productId
-            const cart = await cartService.updateCart(cid, { product_id: newProductId }, { new: true })
-            if(!cart){
-                return res.status(404).json({
-                    success: false,
-                    message: 'not found'
-                })
-            }
-            cart.product_id = newProductId
-            await cart.save()
-            return res.status(200).json({
-                success: true,
-                data: cart
-            })
-        } catch (error) {
-            next(error)
         }
     }
     deleteCart = async(req,res,next)=> {
         try {
             const cid = req.params.id
-            const cart = await cartService.deleteCart(cid)
+            const cart = await this.cartService.deleteCart(cid)
             if(cart){
                 return res.status(200).json({
                     succes: true,
@@ -174,3 +159,47 @@ class CartController {
 }
 
 export default CartController
+
+/* addProductToCart = async (req, res, next) => {
+    try {
+      const { cartId, productId } = req.params;
+      const cart = await cartService.getCart(cartId);
+      const product = await productService.getProduct(productId);
+      if (!cart || !product) {
+        return res.status(404).json({
+          success: false,
+          message: 'Cart or product not found'
+        });
+      }
+      cart.product_id = productId;
+      await cart.save();
+      return res.status(200).json({
+        success: true,
+        message: 'Product added to cart',
+        data: cart
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+updateCart = async(req,res,next)=>{
+    try {
+        const cid = req.params.id
+        const newProductId = req.body.productId
+        const cart = await cartService.updateCart(cid, { product_id: newProductId }, { new: true })
+        if(!cart){
+            return res.status(404).json({
+                success: false,
+                message: 'not found'
+            })
+        }
+        cart.product_id = newProductId
+        await cart.save()
+        return res.status(200).json({
+            success: true,
+            data: cart
+        })
+    } catch (error) {
+        next(error)
+    }
+} */

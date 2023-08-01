@@ -23,15 +23,20 @@ fetch(`/api/products/${pid}`)
 
         const addToCartBtn = document.getElementById('addToCartBtn')
         addToCartBtn.addEventListener('click',()=>{
-            const productId = product._id
+            const params = new URLSearchParams(location.search)
+            const productId = params.get('id')
+            console.log(productId)
             const quantityInput = document.querySelector('input[type="number"]')
             const quantity = parseInt(quantityInput.value)
-            fetch(`/api/products/${productId}`, {
+            //`/api/products/${productId}`
+            fetch(`/:cid/addProduct/productId`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({quantity})
+                body: JSON.stringify({
+                    product_id: productId,
+                    quantity})
             })
             .then(res=> res.json())
             .then(data=>{
@@ -41,3 +46,22 @@ fetch(`/api/products/${pid}`)
         })
     })
     .catch(err=>console.log(err))
+
+
+/*     //`/api/products/${productId}`
+    fetch(`/api/carts`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity})
+    })
+    .then(res=> res.json())
+    .then(data=>{
+        const cartId = data.data._id
+    })
+    .catch(err=>{console.log(err)})
+})
+}) */

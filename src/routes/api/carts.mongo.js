@@ -1,7 +1,4 @@
 import { Router } from "express";
-import Cart from '../../models/cart.model.js'
-import Product from "../../models/product.model.js";
-import { Types } from "mongoose";
 import CartController from '../../controllers/cart.controller.js'
 
 let carts_mongo = Router()
@@ -10,12 +7,19 @@ const cartController = new CartController()
 carts_mongo.get('/', cartController.getCarts)
 carts_mongo.get('/:cid', cartController.getCart)
 carts_mongo.post('/', cartController.createCart)
-carts_mongo.put('/:cartId/addProduct/:productId', cartController.addProductToCart)
+//carts_mongo.post('/', cartController.createOrGetCart);
+//carts_mongo.put('/:cartId/addProduct/:productId', cartController.addProductToCart)
 carts_mongo.put('/bills/:cid', cartController.getCartBill)
-carts_mongo.put('/:cid', cartController.updateCart)
+carts_mongo.put('/:cid/addProduct/productId', cartController.updateCart)
 carts_mongo.put('/:cid', cartController.deleteCart)
 
-/* carts_mongo.post(
+export default carts_mongo
+/* 
+import Cart from '../../models/cart.model.js'
+import Product from "../../models/product.model.js";
+import { Types } from "mongoose";
+
+carts_mongo.post(
     '/:cartId/addProduct/:productId',
     async(req,res,next)=>{
         try {
@@ -224,4 +228,3 @@ carts_mongo.put(
         }
     }
 ) */
-export default carts_mongo

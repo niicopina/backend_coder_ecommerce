@@ -1,6 +1,6 @@
 import bcryptjs from 'bcrypt'
 
-export default(req,res,next)=>{
+export default function passwordIsOk(req,res,next){
     try {
         let db_password = req.user.password
         let form_password = req.body.password

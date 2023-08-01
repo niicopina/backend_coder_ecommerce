@@ -4,6 +4,9 @@ class ProductDaoMongo {
     constructor(){
         this.Product = Product
     }
+    /* getProducts = async (options) => {
+        return await this.Product.paginate({}, options)
+    } */
     getProduct = async(pid) => {
         return await this.Product.findOne({_id: pid})
         }

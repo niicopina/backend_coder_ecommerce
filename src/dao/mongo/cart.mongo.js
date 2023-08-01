@@ -13,9 +13,15 @@ class CartDaoMongo {
     createCart = async(product_id, quantity) => {
         return await this.Cart.create(product_id, quantity)
     }
-    updateCart = async(cid) => {
-        return await this.Cart.findOneAndUpdate({_id:cid},{new:true})
-    }
+    updateCart = async (cartId, productId, quantity) => {
+        const cart = await this.Cart.findOneAndUpdate(
+          { _id: cartId },
+          { $push: { products: { product_id: productId, quantity: quantity } } },
+          { new: true }
+        );
+    
+        return cart;
+      };
     deleteCart = async(cid) => {
         return await this.Cart.findOneAndDelete({_id: cid})
     }

@@ -8,7 +8,7 @@ const schema = new Schema({
     email:      {type: String, index: true, unique: true,required: true},
     role:       {type: String, default:'user'},
     password:   {type: String, required: true},
-    cart:       {type: mongoose.Schema.Types.ObjectId, ref: 'Cart' },
+    cart:       [{type: mongoose.Schema.Types.ObjectId, ref: 'Cart' }],
 })
 const User = model(collection, schema)
 

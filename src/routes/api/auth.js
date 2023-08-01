@@ -1,17 +1,17 @@
 import { Router } from "express"
+import {cartService} from '../../service/index.js'
 import create_hash from "../../middlewares/create_hash.js"
 import passport from "passport"
 import createToken from "../../middlewares/createToken.js"
 import passport_call from './../../middlewares/passport_call.js'
+import validator from "../../middlewares/logValidator.js"
+import passwordIsOk from "../../middlewares/passwordIsOk.js"
 
 import passportSession from '../../config/passportSession.js'
-import validator from "../../middlewares/logValidator.js"
 import jwt from 'jsonwebtoken';
 import User from "../../models/user.model.js"
 import passIs8 from '../../middlewares/passIs8.js'
 import isValidPassword from "../../middlewares/isValidPassword.js"
-import passwordIsOk from "../../middlewares/passwordIsOk.js"
-
 
 const auth_router = Router()
 
@@ -49,6 +49,7 @@ auth_router.post(
     passport.authenticate('register',{failureRedirect: '/fail-register'}),
     async(req,res,next)=>{
         try {
+            const newCart = await cartService.createCart()
             return res.status(200).json({
                 success: true,
                 message: 'user registered'
@@ -65,6 +66,8 @@ auth_router.post(
     '/login',
     passport.authenticate('login', { session: false }),
     createToken,
+    validator,
+    passwordIsOk,
     (req, res) => {
       try {
         return res
