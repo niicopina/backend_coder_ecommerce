@@ -29,8 +29,9 @@ fetch(`/api/products/${pid}`)
             const quantityInput = document.querySelector('input[type="number"]')
             const quantity = parseInt(quantityInput.value)
             //`/api/products/${productId}`
-            fetch(`/:cid/addProduct/productId`, {
-                method: 'PUT',
+            //api/carts/${cid}/addProduct/productId
+            fetch(`/api/carts`, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
