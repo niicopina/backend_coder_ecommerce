@@ -7,7 +7,7 @@ import passport_call from './../../middlewares/passport_call.js'
 import validator from "../../middlewares/logValidator.js"
 import passwordIsOk from "../../middlewares/passwordIsOk.js"
 
-import passportSession from '../../config/passportSession.js'
+//import passportSession from '../../config/passportSession.js'
 import jwt from 'jsonwebtoken';
 import User from "../../models/user.model.js"
 import passIs8 from '../../middlewares/passIs8.js'

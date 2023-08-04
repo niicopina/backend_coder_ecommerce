@@ -6,8 +6,8 @@ const cartController = new CartController()
 
 carts_mongo.get('/', cartController.getCarts)
 carts_mongo.get('/:cid', cartController.getCart)
-carts_mongo.post('/', cartController.createCart)
-//carts_mongo.post('/', cartController.createOrGetCart);
+//carts_mongo.post('/', cartController.createCart)
+carts_mongo.post('/', cartController.createOrGetCart);
 //carts_mongo.put('/:cartId/addProduct/:productId', cartController.addProductToCart)
 carts_mongo.put('/bills/:cid', cartController.getCartBill)
 carts_mongo.put('/:cid/addProduct/productId', cartController.updateCart)

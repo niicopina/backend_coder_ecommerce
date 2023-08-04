@@ -1,6 +1,7 @@
 import {cartService} from '../service/index.js'
 import {productService} from '../service/index.js'
 import { Types } from "mongoose";
+import User from '../models/user.model.js'
 
 class CartController {
     constructor(){
@@ -26,11 +27,24 @@ class CartController {
     } 
     createOrGetCart = async (req, res, next) => {
         try {
-          const cart = await this.cartService.createOrGetCart();
+            console.log(req.user)
+            /* if (!req.user) {
+                return res.status(401).json({ success: false, message: 'Unauthorized' });
+              } */
+        const {product_id, quantity} = req.body
+        const user_id = req.user._id;
+        const cart = await this.cartService.createOrGetCart(product_id, quantity, user_id);
+      
+        const user = await User.findByIdAndUpdate(
+            user_id,
+            { $push: { cart: cart._id } }, // Agregar el ID del carrito al array 'cart' del usuario
+            { new: true }
+          );
+      
           return res.status(200).json({
             success: true,
-            message: 'Cart created or retrieved successfully',
-            data: cart,
+            message: 'Cart created or retrieved and associated with user successfully',
+            data: {cart,user}
           });
         } catch (error) {
           next(error);
