@@ -27,7 +27,10 @@ class CartController {
     } 
     createOrGetCart = async (req, res, next) => {
         try {
-
+            console.log(req.user)
+            /* if (!req.user) {
+                return res.status(401).json({ success: false, message: 'Unauthorized' });
+              } */
         const {product_id, quantity} = req.body
         const user_id = req.user._id;
         const cart = await this.cartService.createOrGetCart(product_id, quantity, user_id);
